@@ -7,18 +7,29 @@ __all__ = ['render']
 
 
 
-def render(template, data):
+def render(data, template=None, string=None):
     """A basic sprintf-based string templating language.
     
-    Sample usage:
+    Simple (string-based) usage:
+    
+        >>> from cti.core import TemplateInterface
+        >>> cti = TemplateInterface()
+        >>> cti.render('sprintf:', dict(hello="world"), string="Hello %(hello)s!")
+        ('application/json', 'Hello world!')
+    
+    File-based usage:
     
         >>> from cti.core import TemplateInterface
         >>> cti = TemplateInterface()
         >>> cti.render('sprintf:./tests/templates/hello.txt', dict(hello="world"))
         ('application/json', 'Hello world!')
+    
     """
     
-    with open(template):
-        content = template.read()
+    content = string
+    
+    if template:
+        with open(template):
+            content = template.read()
     
     return 'application/json', content % data
