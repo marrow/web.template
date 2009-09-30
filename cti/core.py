@@ -11,7 +11,6 @@ class EngineProxy(object):
     def __init__(self, engine, defaults=dict()):
         self.engine = engine
         self.defaults = defaults
-        self.cached = None
     
     def __call__(self, *args, **kw):
         options = dict(self.defaults)
