@@ -45,7 +45,6 @@ class Engines(dict):
         self.refresh()
     
     def refresh(self, **kw):
-        print "refresh"
         engines = []
         
         for engine in pkg_resources.iter_entry_points('web.templating'):
