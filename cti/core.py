@@ -32,12 +32,9 @@ class Engines(dict):
     It also acts as an attribute dictionary for even easier reference.
     
     Rendering engines are stored internally as entry point references,
-    and are .load()'ed on demand.  If an engine can't be loaded from
-    the initial cache, the cache will be updated once, then a
-    ValueError will be raised.
-    
-    Auto-reloading like this allows templating languages to be added
-    at runtime.
+    and are .load()'ed on demand.  Support is present for both simple
+    callable entry points and new-style classes whose instances are
+    callable.  This allows your rendering engine to have startup code.
     """
     
     def __init__(self, **kw):
