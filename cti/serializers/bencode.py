@@ -15,9 +15,9 @@ def render(data, template=None, kind='enhanced'):
     
     Sample usage:
     
-        >>> from sti import TemplateInterface
-        >>> sti = TemplateInterface()
-        >>> sti.render('bencode:', dict(hello="world"))
+        >>> from sti.core import Engines
+        >>> render = Engines()
+        >>> render.bencode(dict(hello="world"))
         ('application/x-bencode', 'd5:hello5:worlde')
         
     """

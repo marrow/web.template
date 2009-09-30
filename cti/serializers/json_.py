@@ -26,16 +26,16 @@ def render(data, template=None, content_type='application/json', **kw):
     
     Sample usage:
     
-        >>> from cti.core import TemplateInterface
-        >>> cti = TemplateInterface()
-        >>> cti.render('json:', dict(hello="world"))
+        >>> from sti.core import Engines
+        >>> render = Engines()
+        >>> render.json(dict(hello="world"))
         ('application/json', '{"hello": "world"}')
     
     More compact notation:
         
-        >>> from cti.core import TemplateInterface
-        >>> cti = TemplateInterface()
-        >>> cti.render('json:', dict(hello="world"), separators=(',', ':'))
+        >>> from sti.core import Engines
+        >>> render = Engines()
+        >>> render.json(dict(hello="world"), separators=(',', ':'))
         ('application/json', '{"hello":"world"}')
         
     """
