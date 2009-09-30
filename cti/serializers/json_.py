@@ -15,7 +15,7 @@ __all__ = ['render']
 
 
 
-def render(data, template=None, **kw):
+def render(data, template=None, content_type='application/json', **kw):
     """A basic JSON serializer templating language.
     
     Accepts the same extended arguments as the JSON dumps() function, see:
@@ -40,4 +40,4 @@ def render(data, template=None, **kw):
         
     """
     
-    return 'application/json', dumps(data, **kw)
+    return content_type, dumps(data, **kw)
