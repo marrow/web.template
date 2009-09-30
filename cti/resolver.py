@@ -3,6 +3,22 @@
 from pkg_resources import resource_filename
 
 
+def parse_template(path, default="genshi"):
+    # Split the engine and template parts.
+    engine, _, template = path.rpartition(':')
+    
+    if not engine: engine = default
+    
+    if not template: return (engine, None, None)
+    
+    if template[0] in ('/', '.'): return (engine, None, template)
+    
+    # Split the template into package and path.
+    package, _, path = template.partition('/')
+    
+    return (engine, package, path if path else None)
+
+
 
 class DottedFileNameFinder(object):
     """this class implements a cache system above the
