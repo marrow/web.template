@@ -1,0 +1,16 @@
+A common templating interface for Python, esp. web applications.
+
+Simple usage:
+
+>>> from cti.core import Engines
+>>> render = Engines()
+>>>
+>>> render.json("Hello world!")
+('application/json', '"Hello world!"')
+>>>
+>>> render.yaml(dict(name="world", statement="Hello!", test=['foo', 'bar', 'baz']))
+('application/x-yaml',
+ 'name: world\nstatement: Hello!\ntest: [foo, bar, baz]\n')
+>>>
+>>> render.sprintf(dict(name="world"), string="Hello %(name)s!")
+('text/plain', 'Hello world!')
