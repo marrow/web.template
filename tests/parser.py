@@ -1,4 +1,4 @@
-import re
+import re, datetime
 
 templates = [
         'json:', # pure engine, usually a serializer
@@ -26,9 +26,32 @@ def parse_strings(path, default="genshi"):
     return (engine, package, path if path else None)
     
 
+reg = re.compile(
+        r'^'
+        r'(?:(?P<engine>[^:]+):)?'
+        r'(?:(?P<package>[^/.][^/]+))?'
+        r'(?:(?P<path>.+))?'
+        r'$'
+    )
+
 def parse_regex(path, default="genshi"):
-    pass
+    engine, package, path = reg.match(path).groups()
+    return engine if engine else default, package, path
 
 
-for i in templates:
-    print "%s -> %r" % (i, parse_strings(i))
+callcount = range(250000)
+fn = parse_strings
+
+for n in [0, 1]:
+    for i in templates:
+        now = datetime.datetime.now()
+        
+        for j in callcount:
+            k = fn(i)
+        
+        diff = datetime.datetime.now() - now
+        
+        print "[%r]\t%s -> %r" % (diff.microseconds, i, k)
+    
+    fn = parse_regex
+    print
