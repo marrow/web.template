@@ -4,18 +4,15 @@
 """
 
 
-import pkg_resources
-
-import web
-from web.utils.object import DottedFileNameFinder
-from web.utils.dictionary import adict
+from cti.core import Engines
+from cti.resolver import PathResolver
 
 
 __all__ = ['template', 'TemplatingMiddleware']
 log = __import__('logging').getLogger(__name__)
 
-_engines = dict((_engine.name, _engine) for _engine in pkg_resources.iter_entry_points('python.templating.engines'))
-_lookup = DottedFileNameFinder()
+engines = Engines()
+resolve = PathResolver()
 
 
 

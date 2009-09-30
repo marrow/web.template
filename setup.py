@@ -58,9 +58,16 @@ setup(
         
         entry_points = {
                 'web.templating': [
-                        'json = cti.serializers.json:render',
+                        'json = cti.serializers.json_:render',
                         'bencode = cti.serializers.bencode:render',
-                        'sprintf = cti.templating.sprintf:render'
+                        'yaml = cti.serializers.yaml_:render',
+                        'pickle = cti.serializers.pickle_:render_pickle',
+                        'cpickle = cti.serializers.pickle_:render_cpickle',
+                        'marshal = cti.serializers.marshal_:render',
+                        
+                        'sprintf = cti.templating.sprintf:render',
+                        'formatter = cti.templating.formatter:render',
+                        'template = cti.templating.tempalte:render',
                     ]
             }
     )

@@ -7,7 +7,7 @@ __all__ = ['render']
 
 
 
-def render(data, template=None, string=None):
+def render(data, template=None, string=None, content_type='text/plain'):
     """A basic sprintf-based string templating language.
     
     Simple (string-based) usage:
@@ -32,4 +32,4 @@ def render(data, template=None, string=None):
         with open(template):
             content = template.read()
     
-    return 'application/json', content % data
+    return content_type, content % data
