@@ -39,7 +39,7 @@ class Engines(dict):
     
     def __init__(self, **kw):
         super(Engines, self).__init__()
-        self.refresh()
+        self.refresh(**kw)
     
     def refresh(self, **kw):
         engines = []
