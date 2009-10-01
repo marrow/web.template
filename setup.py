@@ -67,7 +67,7 @@ setup(
                         
                         'sprintf = cti.templating.sprintf:render',
                         'formatter = cti.templating.formatter:render',
-                        'template = cti.templating.tempalte:render',
+                        'template = cti.templating.template:render',
                     ]
             }
     )
