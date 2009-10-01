@@ -7,7 +7,7 @@ except ImportError:
     try:
         from simplejson import dumps
     
-    except ImportError:
+    except ImportError: # pragma: no cover
         raise ImportError('Your version of Python requires that you install the simplejson package for JSON support.')
 
 

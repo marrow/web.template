@@ -54,10 +54,7 @@ class Engines(dict):
         if not callable(value):
             raise TypeError("Engines must be callable, a bare function, method, or callable class instance.")
         
-        if issubclass(value, EngineProxy):
-            return super(Engines, self).__setitem__(EngineProxy(value))
-        
-        super(Engines, self).__setitem__(EngineProxy(value))
+        super(Engines, self).__setitem__(name, EngineProxy(value))
     
     def __getattr__(self, name):
         return self[name]

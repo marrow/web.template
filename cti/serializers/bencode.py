@@ -47,7 +47,7 @@ class Encoding(object):
     All encoding implementations used with this library should inherit and implement this.
     """
 
-    def encode(self, data):
+    def encode(self, data): # pragma: no cover
         """Encode data.
 
         @param data: The data to encode.  Must, at a minimum, implement encoding of C{str}, C{int}, and C{long} values.
@@ -57,7 +57,7 @@ class Encoding(object):
         """
         raise NotImplementedError
 
-    def decode(self, data):
+    def decode(self, data): # pragma: no cover
         """Decode data.
 
         @param data: The data (byte string) to decode.

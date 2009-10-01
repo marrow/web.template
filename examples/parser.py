@@ -39,7 +39,7 @@ def parse_regex(path, default="genshi"):
     return engine if engine else default, package, path
 
 
-callcount = range(250000)
+callcount = range(25000)
 fn = parse_strings
 
 for n in [0, 1]:
