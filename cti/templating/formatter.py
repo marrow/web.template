@@ -2,9 +2,6 @@
 
 from __future__ import with_statement
 
-if sys.version_info <= (2, 5):
-    raise SystemExit("Python 2.5 or later is required.")
-
 from string import Formatter
 
 
@@ -40,8 +37,8 @@ def render(data, template=None, string=None, content_type='text/plain'):
     content = string
     
     if template:
-        with open(template):
-            content = template.read()
+        with open(template) as f:
+            content = f.read()
     
     return content_type, renderer.vformat(
             content,

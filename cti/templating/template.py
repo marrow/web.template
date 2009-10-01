@@ -35,8 +35,8 @@ def render(data, template=None, string=None, safe=True, content_type='text/plain
     content = string
     
     if template:
-        with open(template):
-            content = template.read()
+        with open(template) as f:
+            content = f.read()
     
     renderer = Template(content)
     
