@@ -42,3 +42,9 @@ class TestResolver(TestCase):
         
     def test_relative(self):
         engine, path = self.resolve('./tmp/foo')
+    
+    def test_bare(self):
+        engine, path = self.resolve('json:')
+        
+        self.assertEqual(engine, 'json')
+        self.assertEqual(path, None)

@@ -36,10 +36,13 @@ class Resolver(Cache):
         engine, package, path = self.parse(template)
         
         if not package:
+            if not path:
+                # Handle bare engines, e.g. serializers.
+                self[template] = (engine, None)
+                return self[template]
+            
             # Handle absolute and relative paths.
-            
             self[template] = (engine, os.path.abspath(os.path.join(*path.split('/'))))
-            
             return self[template]
         
         parts = package.split('.')
