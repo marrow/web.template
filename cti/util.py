@@ -48,9 +48,7 @@ class Cache(dict):
     
     def __getitem__(self, key):
         element = super(Cache, self).__getitem__(key)
-        
         self._update(element)
-        
         return element.value
     
     def __setitem__(self, key, value):

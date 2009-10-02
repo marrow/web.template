@@ -50,3 +50,20 @@ class TestEnginesDictCommonUsage(TestCase):
         
         else:
             self.fail()
+    
+    def test_render(self):
+        render = Engines()
+        
+        self.assertEqual(render('sprintf:./templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
+    
+    def test_render_no_engine(self):
+        render = Engines()
+        
+        try:
+            self.assertEqual(render('./templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
+        
+        except ValueError:
+            pass
+        
+        except:
+            self.fail()

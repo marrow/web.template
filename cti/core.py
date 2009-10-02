@@ -2,27 +2,12 @@
 
 import pkg_resources
 
+from cti.resolver import Resolver
+from cti.util import Cache
+
 
 __all__ = ['Engines']
 
-
-
-class EngineProxy(object):
-    def __init__(self, engine, defaults=dict()):
-        self.engine = engine
-        self.defaults = defaults
-    
-    def __call__(self, *args, **kw):
-        options = dict(self.defaults)
-        options.update(kw)
-        
-        if isinstance(self.engine, pkg_resources.EntryPoint):
-            self.engine = self.engine.load()
-        
-        if isinstance(self.engine, type):
-            self.engine = self.engine(**options)
-        
-        return self.engine(*args, **options)
 
 
 class Engines(dict):
@@ -36,16 +21,42 @@ class Engines(dict):
     callable entry points and new-style classes whose instances are
     callable.  This allows your rendering engine to have startup code.
     """
+    class EngineProxy(object):
+        def __init__(self, engine, defaults=dict()):
+            self.engine = engine
+            self.defaults = defaults
+        
+        def __call__(self, *args, **kw):
+            options = dict(self.defaults)
+            options.update(kw)
+            
+            if isinstance(self.engine, pkg_resources.EntryPoint):
+                self.engine = self.engine.load()
+            
+            if isinstance(self.engine, type):
+                self.engine = self.engine(**options)
+            
+            return self.engine(*args, **options)
     
-    def __init__(self, **kw):
+    def __init__(self, default=None, cache=50, **kw):
         super(Engines, self).__init__()
+        super(Engines, self).__setattr__('resolve', Resolver(default, cache))
+        
         self.refresh(**kw)
+    
+    def __call__(self, template, data, **kw):
+        engine, filename = self.resolve(template)
+        
+        if not engine:
+            raise ValueError('You must explicitly define an engine in each template path if no default is given.')
+        
+        return self[engine](data=data, template=filename, **kw)
     
     def refresh(self, **kw):
         engines = []
         
         for engine in pkg_resources.iter_entry_points('web.templating'):
-            engines.append((engine.name, EngineProxy(engine, kw.get(engine.name, dict()))))
+            engines.append((engine.name, self.EngineProxy(engine, kw.get(engine.name, dict()))))
         
         self.clear()
         self.update(engines)
@@ -54,7 +65,7 @@ class Engines(dict):
         if not callable(value):
             raise TypeError("Engines must be callable, a bare function, method, or callable class instance.")
         
-        super(Engines, self).__setitem__(name, EngineProxy(value))
+        super(Engines, self).__setitem__(name, self.EngineProxy(value))
     
     def __getattr__(self, name):
         return self[name]
