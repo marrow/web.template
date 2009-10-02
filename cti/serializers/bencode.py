@@ -15,7 +15,7 @@ def render(data, template=None, kind='enhanced'):
     
     Sample usage:
     
-        >>> from sti.core import Engines
+        >>> from cti.core import Engines
         >>> render = Engines()
         >>> render.bencode(dict(hello="world"))
         ('application/x-bencode', 'd5:hello5:worlde')

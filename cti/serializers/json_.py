@@ -26,14 +26,14 @@ def render(data, template=None, content_type='application/json', **kw):
     
     Sample usage:
     
-        >>> from sti.core import Engines
+        >>> from cti.core import Engines
         >>> render = Engines()
         >>> render.json(dict(hello="world"))
         ('application/json', '{"hello": "world"}')
     
     More compact notation:
         
-        >>> from sti.core import Engines
+        >>> from cti.core import Engines
         >>> render = Engines()
         >>> render.json(dict(hello="world"), separators=(',', ':'))
         ('application/json', '{"hello":"world"}')

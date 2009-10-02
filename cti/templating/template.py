@@ -18,16 +18,16 @@ def render(data, template=None, string=None, safe=True, content_type='text/plain
     
     Simple (string-based) usage:
     
-        >>> from cti.core import TemplateInterface
-        >>> cti = TemplateInterface()
-        >>> cti.render('template:', dict(name="world"), string="Hello $name!")
+        >>> from cti.core import Engines
+        >>> render = Engines()
+        >>> render('template:', dict(name="world"), string="Hello $name!")
         ('text/plain', 'Hello world!')
     
     File-based usage:
     
-        >>> from cti.core import TemplateInterface
-        >>> cti = TemplateInterface()
-        >>> cti.render('template:./tests/templates/hello2.txt', dict(name="world"))
+        >>> from cti.core import Engines
+        >>> render = Engines()
+        >>> render('template:./tests/templates/hello2.txt', dict(name="world"))
         ('text/plain', 'Hello world!')
     
     """
