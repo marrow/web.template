@@ -68,6 +68,8 @@ setup(
                         'sprintf = cti.templating.sprintf:render',
                         'formatter = cti.templating.formatter:render',
                         'template = cti.templating.template:render',
+                        
+                        'jinja2 = cti.templating.jinja2_:Jinja2',
                     ]
             }
     )
