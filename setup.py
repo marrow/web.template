@@ -69,6 +69,7 @@ setup(
                         'formatter = cti.templating.formatter:render',
                         'template = cti.templating.template:render',
                         
+                        'genshi = cti.templating.genshi_:Genshi',
                         'jinja2 = cti.templating.jinja2_:Jinja2',
                     ]
             }
