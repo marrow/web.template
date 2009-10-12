@@ -4,22 +4,44 @@
 """
 
 
+import os
+
 from cti.core import Engines
-from cti.resolver import PathResolver
+from cti.resolver import Resolver
+
+
+try:
+    from web.core import response
+    yapwf = True
+
+except ImportError:
+    from webob import Response
+    yapwf = False
 
 
 __all__ = ['template', 'TemplatingMiddleware']
 log = __import__('logging').getLogger(__name__)
 
-engines = Engines()
-resolve = PathResolver()
+render = Engines()
+resolve = Resolver()
+
+registry = []
 
 
 
 def template(template, **extras):
     def outer(func):
         def inner(*args, **kw):
-            return TemplatingMiddleware.render(template, func(*args, **kw), **extras)
+            result = func(*args, **kw)
+            
+            if not isinstance(result, dict):
+                return result
+            
+            result = TemplatingMiddleware.variables(result, template)
+            
+            mime, result = render(template, result, **extras)
+            
+            return result
         
         # Become more transparent.
         inner.__name__ = func.__name__
@@ -36,84 +58,54 @@ class TemplatingMiddleware(object):
         self.config = config.copy()
         self.config.update(kw)
         self.application = application
+        render.resolve.default = config.get('web.templating.engine', 'genshi')
+    
+    @staticmethod
+    def lookup(template):
+        return resolve(template)[1]
+    
+    @staticmethod
+    def relative(parent):
+        parent = resolve(parent)[1]
+        def inner(template):
+            return os.path.relpath(resolve(template)[1], os.path.dirname(parent))
+        return inner
     
     @classmethod
-    def variables(cls):
-        def lookup(template_name, template_extension='.html'):
-            return _lookup.get_dotted_filename(template_name, template_extension)
-        
-        return dict(
-                web=adict(
-                        request = web.core.request,
-                        response = web.core.response,
-                        session = web.core.session
-                    ),
-                lookup = lookup,
+    def variables(cls, udata, template):
+        data = dict(
+                lookup = cls.lookup,
+                relative = cls.relative(template)
             )
-    
-    @classmethod
-    def render(cls, template, data, **kw):
-        # Determine the templating engine to use.
-        # The template engine can be defined by, in order of presidence, the returned value, the environment, or the configuration.
-        if ':' in template: template = template.split(':')
-        engine = template[0] if isinstance(template, list) else web.core.request.environ.get("buffet.engine", "genshi")
-        template = template[1] if isinstance(template, list) else template
         
-        # Allocate a Buffet engine to handle this template request.
-        # TODO: Cache the result of this based on the input of variable callback and options.
+        for i in registry:
+            if callable(i):
+                data.update(i())
+            else:
+                data.update(i)
         
-        options = web.core.request.environ.get("buffet.options", dict())
-        options.update(kw)
+        data.update(udata)
         
-        if 'buffet.format' in options: del options['buffet.format']
-        if 'buffet.fragment' in options: del options['buffet.fragment']
-        
-        if template == 'json':
-            try:
-                from json import dumps
-            except ImportError:
-                from simplejson import dumps
-            
-            web.core.response.content_type = 'application/json; charset=utf-8'
-            return dumps(data, **options)
-        
-        elif template == 'bencode':
-            from web.extras.bencode import EnhancedBencode
-            engine = EnhancedBencode()
-            
-            web.core.response.content_type = 'application/x-bencode; charset=utf-8'
-            return engine.encode(data)
-        
-        engine = _engines[engine].load()
-        engine = engine(cls.variables, options)
-        
-        del options
-        
-        return engine.render(
-                data,
-                kw.get("buffet.format", web.core.request.environ.get("buffet.format", "html")),
-                kw.get("buffet.fragment", web.core.request.environ.get("buffet.fragment", False)),
-                template
-            )
+        return data
     
     @classmethod
     def response(cls, result, environ, start_response):
-        if isinstance(result, str):
-            web.core.response.body = result
+        if not yapwf:
+            response = Response()
+        else:
+            global response
         
-        elif isinstance(result, unicode):
-            web.core.response.unicode_body = result
+        response.content_type = result[0]
         
-        return web.core.response(environ, start_response)
+        if isinstance(result[1], str):
+            response.body = result[1]
+        
+        elif isinstance(result[1], unicode):
+            response.unicode_body = result[1]
+        
+        return response(environ, start_response)
     
     def __call__(self, environ, start_response):
-        environ.update({
-                'buffet.engine': self.config.get("buffet.engine", "genshi"),
-                'buffet.options': self.config.get("buffet.options", dict()),
-                'buffet.format': self.config.get("buffet.format", "html"),
-                'buffet.fragment': self.config.get("buffet.fragment", False),
-            })
-        
         result = self.application(environ, start_response)
         
         # Bail if the returned value is not a tuple.
@@ -126,4 +118,10 @@ class TemplatingMiddleware(object):
         if not isinstance(template, str) or not isinstance(data, dict) or not isinstance(extras, dict):
             raise TypeError("Invalid tuple values returned to TemplatingMiddleware.")
         
-        return self.response(self.render(template, data, **extras), environ, start_response)
+        options = dict()
+        options.update(extras)
+        
+        if 'web.translator' in environ:
+            options['i18n'] = environ['web.translator']
+        
+        return self.response(render(template, self.variables(data, template), **options), environ, start_response)

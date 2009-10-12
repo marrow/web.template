@@ -2,9 +2,13 @@
 
 from __future__ import with_statement
 
+from os import path
+
 from cti.util import Cache
 
 try:
+    from genshi.input import ET, HTML, XML
+    from genshi.filters import Translator
     from genshi.template import TemplateLoader, TextTemplate, MarkupTemplate
     from genshi.template.loader import TemplateNotFound
 
@@ -17,32 +21,32 @@ __all__ = ['Genshi']
 
 
 class Genshi(object):
-    def __init__(self, cache=True, cache_size=30, **kw):
+    def __init__(self, cache=True, cache_size=15, **kw):
         self.cache = Cache(cache_size if cache else 0)
     
-    def __call__(self, data, template, kind="markup", **options):
+    def __call__(self, data, template, kind="markup", i18n=None, **options):
         # Method can be one of xml, xhtml, html, or text.
         method = options.get('method', 'text' if kind == 'text' else 'xhtml')
+        content_type = options.get('content_type', 'text/plain' if kind == 'text' else 'text/html')
+        kind = TextTemplate if kind == 'text' else MarkupTemplate
         
-        if kind == "markup":
-            return self.markup(data, template, method, **options)
+        data.update({'ET': ET, 'HTML': HTML, 'XML': XML})
         
-        return self.text(data, template, method, **options)
-    
-    def text(self, data, template, method, strict=False, content_type="text/plain", **options):
-        if template not in self.cache:
-            with open(template) as f:
-                tmpl = TextTemplate(f.read())
-                tmpl.lookup = 'strict' if strict else 'lenient'
-                self.cache[template] = tmpl
+        bpath = path.dirname(template)
         
-        return content_type, self.cache[template].generate(**data).render(method)
-    
-    def markup(self, data, template, method, strict=False, content_type="text/html", doctype='xhtml', strip_whitespace=True, namespace_prefixes=None, drop_xml_decl=True, strip_markup=False, **kw):
-        if template not in self.cache:
-            with open(template) as f:
-                tmpl = MarkupTemplate(f.read())
-                tmpl.lookup = 'strict' if strict else 'lenient'
-                self.cache[template] = tmpl
+        if i18n is None:
+            if bpath not in self.cache:
+                self.cache[bpath] = TemplateLoader([bpath], auto_reload=True)
+            
+            tmpl = self.cache[bpath].load(template, cls=kind)
+            
+            return content_type, tmpl.generate(**data).render(method)
         
-        return content_type, self.cache[template].generate(**data).render(method)
+        def template_loaded(template):
+            template.filters.insert(0, Translator(i18n.ugettext))
+        
+        loader = TemplateLoader([bpath], auto_reload=True, callback=template_loaded)
+        
+        tmpl = loader.load(template, cls=kind)
+        
+        return content_type, tmpl.generate(**data).render(method)

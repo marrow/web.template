@@ -50,12 +50,12 @@ class Resolver(Cache):
         
         path = path.split('/')
         
-        possibilities = [i for i in resource_listdir('.'.join(parts), '/'.join(path[:-1])) if i.startswith(path[-1])]
+        possibilities = [i for i in resource_listdir('.'.join(parts), '/'.join(path[:-1])) if i.startswith(path[-1] + '.')]
         
         if len(possibilities) == 1:
             path[-1] = possibilities[0]
         
-        else:
+        elif len(possibilities) > 1:
             if path[-1] not in possibilities:
                 raise ValueError('Ambiguous template name. Please use the following template path syntax: %s/%s.[%s]' % (
                         '.'.join(parts),
