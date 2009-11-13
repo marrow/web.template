@@ -3,7 +3,7 @@
 """Release information about the Common Templating Interface."""
 
 
-name = "TemplatingInterface"
+name = "TemplateInterface"
 version = "0.1"
 
 summary = "A common templating interface for Python applications."

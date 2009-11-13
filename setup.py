@@ -3,14 +3,15 @@
 
 import sys, os
 
-from setuptools import setup, find_packages
+from distribute_setup import use_setuptools
+use_setuptools()
 
+from setuptools import setup, find_packages
 
 if sys.version_info <= (2, 5):
     raise SystemExit("Python 2.5 or later is required.")
 
 execfile(os.path.join("cti", "release.py"))
-
 
 
 setup(
