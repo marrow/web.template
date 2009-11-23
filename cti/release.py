@@ -4,7 +4,7 @@
 
 
 name = "TemplateInterface"
-version = "0.1"
+version = "0.5"
 
 summary = "A common templating interface for Python applications."
 description = """"""
