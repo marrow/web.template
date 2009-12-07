@@ -7,3 +7,5 @@ build/
 dist/
 tests/.coverage
 tests/.noseids
+.coverage
+pip-log.txt
