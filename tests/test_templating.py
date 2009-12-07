@@ -39,6 +39,13 @@ class TestTemplating(TestCase):
     def test_template_file(self):
         self.assertEqual(self.render.template(dict(name="world"), './templates/hello-template.txt'),
                 ('text/plain', 'Hello world!'))
+
+
+class TestEngines(TestCase):
+    def setUp(self):
+        self.render = Engines()
     
-    
+    def test_mako(self):
+        self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako.txt', content_type='text/plain'),
+                ('text/plain', u'Hello world!'))
     
