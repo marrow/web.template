@@ -5,6 +5,7 @@
 
 
 import os
+import pkg_resources
 
 from cti.core import Engines
 from cti.resolver import Resolver
@@ -12,11 +13,11 @@ from cti.resolver import Resolver
 
 try:
     from web.core import response
-    yapwf = True
+    framework = True
 
 except ImportError:
     from webob import Response
-    yapwf = False
+    framework = False
 
 
 __all__ = ['template', 'TemplatingMiddleware']
@@ -58,7 +59,9 @@ class TemplatingMiddleware(object):
         self.config = config.copy()
         self.config.update(kw)
         self.application = application
+        
         render.resolve.default = config.get('web.templating.engine', 'genshi')
+        self.use_buffet = config.get('web.templating.buffet', False)
     
     @staticmethod
     def lookup(template):
@@ -90,10 +93,8 @@ class TemplatingMiddleware(object):
     
     @classmethod
     def response(cls, result, environ, start_response):
-        if not yapwf:
+        if not framework:
             response = Response()
-        else:
-            global response
         
         response.content_type = result[0]
         
@@ -104,6 +105,27 @@ class TemplatingMiddleware(object):
             response.unicode_body = result[1]
         
         return response(environ, start_response)
+    
+    @classmethod
+    def buffet(cls, engine, template, data, content_type='text/html', **kw):
+        """Backwards compatability with the Buffet ad-hoc template API."""
+        
+        _buffet = dict((_engine.name, _engine) for _engine in pkg_resources.iter_entry_points('python.templating.engines'))
+        print repr(_buffet)
+        
+        options = dict(kw)
+        if 'buffet.format' in options: del options['buffet.format']
+        if 'buffet.fragment' in options: del options['buffet.fragment']
+        
+        engine = _buffet[engine].load()
+        engine = engine(cls.variables, options)
+
+        return content_type, engine.render(
+                data,
+                kw.get("buffet.format", "html"),
+                kw.get("buffet.fragment", False),
+                template
+            )
     
     def __call__(self, environ, start_response):
         result = self.application(environ, start_response)
@@ -124,4 +146,13 @@ class TemplatingMiddleware(object):
         if 'web.translator' in environ:
             options['i18n'] = environ['web.translator']
         
-        return self.response(render(template, self.variables(data, template), **options), environ, start_response)
+        # try:
+        result = render(template, self.variables(data, template), **options)
+        
+        # except KeyError:
+            # if not self.use_buffet: raise
+            #
+            # engine, _ = resolve(template)
+            # result = self.buffet(engine, template.split(':')[-1], data, **options)
+        
+        return self.response(result, environ, start_response)

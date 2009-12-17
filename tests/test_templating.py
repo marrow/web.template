@@ -5,6 +5,8 @@ import sys
 from unittest import TestCase
 
 from cti.core import Engines
+from cti.resolver import Resolver
+from cti.middleware import TemplatingMiddleware
 
 
 
@@ -48,4 +50,13 @@ class TestEngines(TestCase):
     def test_mako(self):
         self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako.txt', content_type='text/plain'),
                 ('text/plain', u'Hello world!'))
-    
+
+
+# class TestBuffete(TestCase):
+#     def setUp(self):
+#         self.resolve = Resolver()
+#         self.middleware = TemplatingMiddleware(None, **{'web.templating.buffet': True})
+#     
+#     def test_cheetah(self):
+#         self.assertEqual(self.middleware.buffet('cheetah', 'templates.hello-cheetah', dict(name="world"), content_type="text/plain"),
+#                 ('text/plain', u'Hello world!'))

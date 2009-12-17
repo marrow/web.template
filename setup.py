@@ -38,7 +38,10 @@ setup(
         tests_require = [
                 'nose',
                 'coverage',
-                'Genshi'
+                'Genshi',
+                'Mako',
+                'TurboCheetah',
+                'PyYAML'
             ],
         
         classifiers = [
