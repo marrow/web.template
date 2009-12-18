@@ -1,0 +1,70 @@
+h1. TemplateInteface
+
+bq. A common templating and serialization interface for Python, esp. web applications.
+
+The core of the API is for the generation of content from a named template, ostensibly on-disk though some engines support passing in strings instead of paths. Evaluated templates are returned as a 2-tuple of @(str(content_type), unicode(content))@, making TemplateInterface very useful for re-use in web frameworks.
+
+
+h2. Background
+
+There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
+
+An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.
+
+
+h2. Application Programming Interfaces
+
+h3. Path Negotiation
+
+Support for:
+
+* @'engine:package.templates.foo'@ — implicit filename extension
+* @'engine:package.templates/foo.html'@ — explicit file path relative to package
+
+Parts are optional; all of the following are legal:
+
+* @'json:'@ — pure engine, usually a serializer
+* @'package.templates.foo'@ — defaulting the engine part, implicit filename extension
+* @'package/templates/foo.html'@ — defaulting the engine, explicit file path
+* @'/var/www/htdocs/index.html'@ — absolute path
+* @'./views/edit.html'@ _or_ @'../../templates/master.html'@ — relative paths
+
+Where the path is relative to is up to the framework making use of the common template interface.  If the framework is using the CommonTemplateInterfaceMiddleware WSGI middleware layer, you can configure the middleware to route lookups relative to the application module, Python's working directory, or to any given path.
+
+
+h3. Engine API
+
+The registered renderer (engine) callable must accept the following named arguments. These arguments are referenced by name but should be defined in this order to allow for easy manual use.  Renderers should also accept an unlimited list of additional keyword arguments called @options@, which are additional values that can be passed in from a combination of a configuration file and call-time value.
+
+* @data@ — a value for use in the template (usually a dictionary of name, value pairs)
+* @template@ — an on-disk absolute path
+* @**options@ — additional keyword arguments
+
+The renderer returns a 2-tuple of:
+
+* @str@ — content type
+* @unicode@ — content
+
+h4. Engine Forms
+
+An engine can be defined as a simple function. Simple functions can not store state except globally, which is frowned upon.  If your template engine needs to keep state (e.g. a cache) it is highly recommended to use a new-style class.  An example of a simple function:
+
+<pre><code>def helloTemplate(data=dict(name='world'), template=None, **options):
+    return 'text/plain', u"Hello %(name)s!" % data</code></pre>
+
+If an engine is a new-style class (that does not subclass TemplateInterface's @Engine@ helper class) the same options are passed to both @__init__@ and @__call__@, and those are the only two methods used.
+
+If you wish to use the @Engine@ helper class you get template caching and automatic reloading of on-disk templates that are modified between calls.  There are two methods you must define in your subclass, and you can override @__init__@ to perform custom initialization:
+
+* @load(filename, **options)@ — 
+* @render(template, data, **options)@ —
+
+An example of a light-weight wrapper for the Mako templating language is as follows:
+
+<pre><code>class Mako(Engine):
+    def load(self, filename, **options):
+        return Template(filename=filename)
+        
+    def render(self, template, data, **options):
+        return self.mimetype, template.render_unicode(**data)</code></pre>
+
