@@ -31,7 +31,7 @@ class Cache(dict):
             self.key, self.value = key, value
         
         def __repr__(self):
-            return repr(self.value)
+            return repr(self.value).replace('object at', 'proxy object at')
     
     def __init__(self, capacity):
         super(Cache, self).__init__()
