@@ -2,12 +2,60 @@
 
 import pkg_resources
 
+from os import stat
+
 from cti.resolver import Resolver
 from cti.util import Cache
 
 
-__all__ = ['Engines']
+__all__ = ['Engine', 'Engines']
 
+
+
+class Engine(object):
+    __cache__ = True
+    
+    def __init__(self, cache=10, monitor=True, content_type='text/html', **options):
+        """Initialize a templating/serialization engine.
+        
+        The cache integer argument defines the number of templates to cache; use 0 to disable.
+        
+        The monitor boolean argument enables or disables file modification monitoring and template reloading.
+        
+        The mimetype string argument defines the default mimetype for this engine.
+        """
+        
+        super(Engine, self).__init__()
+        
+        self.cache = Cache(cache if cache is not None and self.__cache__ else 0)
+        
+        self.monitor = monitor
+        self.mimetype = content_type
+        self.options = options
+    
+    def __call__(self, data, template=None, **options):
+        """Handle intelligent caching and reloading of templates."""
+        
+        try:
+            tmpl, mtime = self.cache[template]
+        
+        except KeyError:
+            tmpl, mtime = None, None
+        
+        if tmpl is None or (self.monitor and stat(template).st_mtime > mtime):
+            tmpl, mtime = self.cache[template] = self.load(template, **options), stat(template).st_mtime
+        
+        return self.render(tmpl, data, **options)
+    
+    def load(self, filename, **options):
+        """Implemented in a sub-class, this returns a template object usable by the render method."""
+        
+        raise NotImplementedError
+    
+    def render(self, template, data, **options):
+        """Implemented by a sub-class, this returns the 2-tuple of mimetype and unicode content."""
+        
+        raise NotImplementedError
 
 
 class Engines(dict):
