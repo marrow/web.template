@@ -22,10 +22,10 @@ class TestResolver(TestCase):
         self.assertTrue(result1 is result2)
     
     def test_unambiguous_object_reference(self):
-        engine, path = self.resolve('genshi:web.extras.examples.wiki.templates.master')
+        engine, path = self.resolve('genshi:templates.hello-template')
         
         self.assertEqual(engine, 'genshi')
-        self.assertEqual(path.rsplit('/', 6)[-6:], ['web', 'extras', 'examples', 'wiki', 'templates', 'master.html'])
+        self.assertEqual(path.split('/')[-3:], ['tests', 'templates', 'hello-template.txt'])
     
     def test_ambiguous_error(self):
         try:
