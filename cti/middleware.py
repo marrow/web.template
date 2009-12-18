@@ -11,14 +11,6 @@ from cti.core import Engines
 from cti.resolver import Resolver
 
 
-try:
-    from web.core import response
-    framework = True
-
-except ImportError:
-    from webob import Response
-    framework = False
-
 
 __all__ = ['template', 'TemplatingMiddleware']
 log = __import__('logging').getLogger(__name__)
@@ -93,7 +85,11 @@ class TemplatingMiddleware(object):
     
     @classmethod
     def response(cls, result, environ, start_response):
-        if not framework:
+        try:
+            from web.core import response
+        
+        except ImportError:
+            from webob import Response
             response = Response()
         
         response.content_type = result[0]
