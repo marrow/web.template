@@ -50,6 +50,10 @@ class TestEngines(TestCase):
     def test_mako(self):
         self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako.txt', content_type='text/plain'),
                 ('text/plain', u'Hello world!'))
+    
+    def test_cheetah(self):
+        self.assertEqual(self.render.cheetah(dict(name="world"), './templates/hello-cheetah.tmpl', content_type='text/plain'),
+                ('text/plain', u'Hello world!\n'))
 
 
 # class TestBuffete(TestCase):
