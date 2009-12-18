@@ -56,7 +56,7 @@ class TestEngines(TestCase):
                 ('text/plain', u'Hello world!\n'))
 
 
-# class TestBuffete(TestCase):
+# class TestBuffet(TestCase):
 #     def setUp(self):
 #         self.resolve = Resolver()
 #         self.middleware = TemplatingMiddleware(None, **{'web.templating.buffet': True})
