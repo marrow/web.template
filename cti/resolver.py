@@ -42,7 +42,8 @@ class Resolver(Cache):
                 return self[template]
             
             # Handle absolute and relative paths.
-            self[template] = (engine, os.path.abspath(os.path.join(*path.split('/'))))
+            path = path.replace('/', os.path.sep)
+            self[template] = (engine, os.path.abspath(path))
             return self[template]
         
         parts = package.split('.')
