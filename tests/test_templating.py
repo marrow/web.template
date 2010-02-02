@@ -19,7 +19,7 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_formatter_file(self):
-        self.assertEqual(self.render.formatter(dict(name="world"), './templates/hello-formatter.txt'),
+        self.assertEqual(self.render.formatter(dict(name="world"), './tests/templates/hello-formatter.txt'),
                 ('text/plain', 'Hello world!'))
     
     def test_sprintf_string(self):
@@ -27,7 +27,7 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_sprintf_file(self):
-        self.assertEqual(self.render.sprintf(dict(name="world"), './templates/hello-sprintf.txt'),
+        self.assertEqual(self.render.sprintf(dict(name="world"), './tests/templates/hello-sprintf.txt'),
                 ('text/plain', 'Hello world!'))
     
     def test_template_string(self):
@@ -39,7 +39,7 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_template_file(self):
-        self.assertEqual(self.render.template(dict(name="world"), './templates/hello-template.txt'),
+        self.assertEqual(self.render.template(dict(name="world"), './tests/templates/hello-template.txt'),
                 ('text/plain', 'Hello world!'))
 
 
@@ -48,11 +48,11 @@ class TestEngines(TestCase):
         self.render = Engines()
     
     def test_mako(self):
-        self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako.txt', content_type='text/plain'),
+        self.assertEqual(self.render.mako(dict(name="world"), './tests/templates/hello-mako.txt', content_type='text/plain'),
                 ('text/plain', u'Hello world!'))
     
     def test_cheetah(self):
-        self.assertEqual(self.render.cheetah(dict(name="world"), './templates/hello-cheetah.tmpl', content_type='text/plain'),
+        self.assertEqual(self.render.cheetah(dict(name="world"), './tests/templates/hello-cheetah.tmpl', content_type='text/plain'),
                 ('text/plain', u'Hello world!\n'))
 
 
