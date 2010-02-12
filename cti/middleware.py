@@ -68,6 +68,9 @@ class TemplatingMiddleware(object):
     
     @classmethod
     def variables(cls, udata, template):
+        if not template.split(':')[-1]:
+            return udata
+        
         data = dict(
                 lookup = cls.lookup,
                 relative = cls.relative(template)
