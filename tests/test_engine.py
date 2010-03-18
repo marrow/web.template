@@ -68,5 +68,4 @@ class TestEngineBaseClass(TestCase):
     def test_interface(self):
         engine = Engine()
         
-        self.assertRaises(NotImplementedError, lambda: engine.load(None, None))
         self.assertRaises(NotImplementedError, lambda: engine.render(None, None, None))

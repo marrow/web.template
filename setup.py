@@ -76,7 +76,7 @@ setup(
                         'cpickle = alacarte.serialize.pickle_:render_cpickle',
                         'marshal = alacarte.serialize.marshal_:render',
                         
-                        'sprintf = alacarte.template.sprintf:render',
+                        'sprintf = alacarte.template.sprintf:SprintfEngine',
                         'formatter = alacarte.template.formatter:FormatterEngine',
                         'template = alacarte.template.template:render',
                         

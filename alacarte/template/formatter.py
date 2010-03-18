@@ -4,15 +4,20 @@ from __future__ import with_statement
 
 from string import Formatter
 
+from alacarte.template.engine import Engine
 
-__all__ = ['render']
+
+__all__ = ['FormatterEngine']
 
 renderer = Formatter()
 
 
 
-def render(data, template=None, string=None, content_type='text/plain'):
+class FormatterEngine(Engine):
     """A basic string.Formatter string templating language.
+    
+    This templating engine is associated with the '.formatter' filename extension
+    and defaults to the 'text/plain' mimetype.
     
     See:
     
@@ -34,14 +39,16 @@ def render(data, template=None, string=None, content_type='text/plain'):
     
     """
     
-    content = string
+    mapping = {
+            'formatter': 'text/plain',
+            None: 'text/plain'
+        }
     
-    if template:
-        with open(template) as f:
-            content = f.read()
-    
-    return content_type, renderer.vformat(
-            content,
-            data if isinstance(data, tuple) else tuple(),
-            data if isinstance(data, dict) else dict()
-        )
+    def render(self, template, data, options):
+        """Implemented by a sub-class, this returns the 2-tuple of mimetype and unicode content."""
+        
+        return self.mapping[None], renderer.vformat(
+                template,
+                data if not isinstance(data, dict) else tuple(),
+                data if isinstance(data, dict) else dict()
+            )

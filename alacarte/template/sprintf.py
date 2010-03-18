@@ -2,12 +2,14 @@
 
 from __future__ import with_statement
 
-
-__all__ = ['render']
-
+from alacarte.template.engine import Engine
 
 
-def render(data, template=None, string=None, content_type='text/plain'):
+__all__ = ['SprintfEngine']
+
+
+
+class SprintfEngine(Engine):
     """A basic sprintf-based string templating language.
     
     Simple (string-based) usage:
@@ -15,21 +17,21 @@ def render(data, template=None, string=None, content_type='text/plain'):
         >>> from alacarte.core import Engines
         >>> render = Engines()
         >>> render('sprintf:', dict(hello="world"), string="Hello %(hello)s!")
-        ('application/json', 'Hello world!')
+        ('text/plain', 'Hello world!')
     
     File-based usage:
     
         >>> from alacarte.core import Engines
         >>> render = Engines()
         >>> render('sprintf:./tests/templates/hello.txt', dict(hello="world"))
-        ('application/json', 'Hello world!')
+        ('text/plain', 'Hello world!')
     
     """
     
-    content = string
+    mapping = {
+            'sprintf': 'text/plain',
+            None: 'text/plain'
+        }
     
-    if template:
-        with open(template) as f:
-            content = f.read()
-    
-    return content_type, content % data
+    def render(self, template, data, options):
+        return self.mapping[None], template % data
