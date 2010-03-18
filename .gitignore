@@ -9,3 +9,4 @@ tests/.coverage
 tests/.noseids
 .coverage
 pip-log.txt
+*.tmproj

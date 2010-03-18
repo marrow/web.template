@@ -1,6 +1,4 @@
-h1. TemplateInteface
-
-bq. A common templating and serialization interface for Python, esp. web applications.
+<dl><dt><h1>à la carte</h1><p>|ˌä lä ˈkärt; lə|</p></dt><dd>A common templating and serialization interface for Python, esp. web applications.</dd><ol><li>adjective<dd>(of a menu or restaurant) listing or serving food that can be ordered as separate items, rather than part of a set meal.</dd><dd>(of food) available on such a menu.</dd></li><br/><li>adverb<dd>as separately priced items from a menu, not as part of a set meal <i>: wine and good food served à la carte.</i></dd></li></ol></dl>
 
 The core of the API is for the generation of content from a named template, ostensibly on-disk though some engines support passing in strings instead of paths. Evaluated templates are returned as a 2-tuple of @(str(content_type), unicode(content))@, making TemplateInterface very useful for re-use in web frameworks.
 
@@ -9,7 +7,22 @@ h2. Background
 
 There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
 
-An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.
+An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new frameworks.
+
+The onus for ease of deployment should be on the templating engine creator, not the framework creator or front-end web developer.
+
+
+h2. Conventions Used in this Document
+
+This document will be written similar to an RFC.  The following is copied, with modification, from "RFC 2119":http://www.ietf.org/rfc/rfc2119.txt, for no other reason than that was the first result in the web search.
+
+# The word *must*, or the terms *required* or *shall*, mean that the definition is an absolute requirement of the specification.
+# The phrase *must not*, or the phrase *shall not*, mean that the definition is an absolute prohibition of the specification.
+# The word *should*, or the adjective *recommended*, mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.
+# The phrase *should not*, or the phrase *not recommended* mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.
+# The word *may*, or the adjective *optional*, mean that an item is truly optional.  One developer may choose to include the item because a particular task requires it or because the developer feels that it enhances an application while another vendor may omit the same item.
+
+An implementation which does not include a particular option *must* be prepared to interoperate with another implementation which does include the option, though perhaps with reduced functionality. In the same vein an implementation which does include a particular option *must* be prepared to interoperate with another implementation which does not include the option (except, of course, for the feature the option provides.)
 
 
 h2. Application Programming Interfaces
@@ -18,46 +31,53 @@ h3. Path Negotiation
 
 Support for:
 
-* @'engine:package.templates.foo'@ — implicit filename extension
+* @'engine:package.templates.foo'@ — implicit filename extension, with 'best guess' from a prioritized list of default engines
 * @'engine:package.templates/foo.html'@ — explicit file path relative to package
 
 Parts are optional; all of the following are legal:
 
-* @'json:'@ — pure engine, usually a serializer
+* @'json:'@ — pure engine, usually a serializer or a template loaded from an existing string
 * @'package.templates.foo'@ — defaulting the engine part, implicit filename extension
 * @'package/templates/foo.html'@ — defaulting the engine, explicit file path
 * @'/var/www/htdocs/index.html'@ — absolute path
 * @'./views/edit.html'@ _or_ @'../../templates/master.html'@ — relative paths
 
-Where the path is relative to is up to the framework making use of the common template interface.  If the framework is using the CommonTemplateInterfaceMiddleware WSGI middleware layer, you can configure the middleware to route lookups relative to the application module, Python's working directory, or to any given path.
+Where the path is relative to is up to the framework making use of the template interface, though this defaults to the current working directory.
 
 
 h3. Engine API
 
-The registered renderer (engine) callable must accept the following named arguments. These arguments are referenced by name but should be defined in this order to allow for easy manual use.  Renderers should also accept an unlimited list of additional keyword arguments called @options@, which are additional values that can be passed in from a combination of a configuration file and call-time value.
+The registered renderer (engine) callable *must* accept the following named arguments. These arguments are referenced by name but *should* be defined in this order to allow for easy manual use.  Renderers *should* also accept an unlimited list of additional keyword arguments (which *may* be called @options@, as it is with the provided default engines), which are additional values that can be passed in from a combination of a stored configuration and call-time value.
 
-* @data@ — a value for use in the template (usually a dictionary of name, value pairs)
-* @template@ — an on-disk absolute path
-* @**options@ — additional keyword arguments
+There are several attributes of the engine that are used internally for specific purposes.  All of these attributes are *optional*, and will default to @None@ if not present.
 
-The renderer returns a 2-tuple of:
+* @mapping@ — a dictionary mapping extensions to content types
+
+The argument specification is as follows, and *may* be implemented as either a class with a @__call__@ attribute or a simple function.
+
+* @data@ — a value for use in the template (usually a dictionary)
+* @template@ — an *optional* on-disk absolute path
+* @**options@ — additional *optional* keyword arguments
+
+The renderer *must* return either a @unicode@ value or a 2-tuple of:
 
 * @str@ — content type
 * @unicode@ — content
 
+
 h4. Engine Forms
 
-An engine can be defined as a simple function. Simple functions can not store state except globally, which is frowned upon.  If your template engine needs to keep state (e.g. a cache) it is highly recommended to use a new-style class.  An example of a simple function:
+An engine *may* be defined as a simple function. Simple functions *must not* store state between calls.  If your template engine needs to keep state (e.g. a cache) then you *must* implement your engine interface as a new-style class.  An example of a simple function:
 
 <pre><code>def helloTemplate(data=dict(name='world'), template=None, **options):
     return 'text/plain', u"Hello %(name)s!" % data</code></pre>
 
-If an engine is a new-style class (that does not subclass TemplateInterface's @Engine@ helper class) the same options are passed to both @__init__@ and @__call__@, and those are the only two methods used.
+If an engine is a new-style class (that does not subclass _à la carte_'s @Engine@ helper class) initial options are passed to the @__init__@ method (assigned previously to @Engines().options@) with render-time options passed to @__call__@.
 
-If you wish to use the @Engine@ helper class you get template caching and automatic reloading of on-disk templates that are modified between calls.  There are two methods you must define in your subclass, and you can override @__init__@ to perform custom initialization:
+If you wish to use the @Engine@ helper class you get template caching and automatic reloading of on-disk templates that are modified between calls.  There are two methods you must define in your subclass, and you can override @__init__@ to perform custom initialization, and @__call__@ to override the :
 
-* @load(filename, **options)@ — 
-* @render(template, data, **options)@ —
+* @prepare(filename, **options)@ — load and return a template object for the cache
+* @render(template, data, **options)@ — render and return a finished template
 
 An example of a light-weight wrapper for the Mako templating language is as follows:
 
@@ -66,5 +86,4 @@ An example of a light-weight wrapper for the Mako templating language is as foll
         return Template(filename=filename)
         
     def render(self, template, data, **options):
-        return self.mimetype, template.render_unicode(**data)</code></pre>
-
+        return template.render_unicode(**data)</code></pre>
