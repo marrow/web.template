@@ -77,7 +77,7 @@ setup(
                         'marshal = alacarte.serialize.marshal_:render',
                         
                         'sprintf = alacarte.template.sprintf:render',
-                        'formatter = alacarte.template.formatter:render',
+                        'formatter = alacarte.template.formatter:FormatterEngine',
                         'template = alacarte.template.template:render',
                         
                         'genshi = alacarte.template.genshi_:Genshi',
