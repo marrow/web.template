@@ -1,6 +1,6 @@
 <dl><dt><h1>à la carte</h1><p>|ˌä lä ˈkärt; lə|</p></dt><dd>A common templating and serialization interface for Python, esp. web applications.</dd><ol><li>adjective<dd>(of a menu or restaurant) listing or serving food that can be ordered as separate items, rather than part of a set meal.</dd><dd>(of food) available on such a menu.</dd></li><br/><li>adverb<dd>as separately priced items from a menu, not as part of a set meal <i>: wine and good food served à la carte.</i></dd></li></ol></dl>
 
-The core of the API is for the generation of content from a named template, ostensibly on-disk though some engines support passing in strings instead of paths. Evaluated templates are returned as a 2-tuple of @(str(content_type), unicode(content))@, making TemplateInterface very useful for re-use in web frameworks.
+The core of the API is for the generation of content from a named template, ostensibly on-disk though some engines support passing in strings instead of paths. Evaluated templates are returned as a 2-tuple of @(None or str(content_type), unicode(content))@, making _à la carte_ very useful for re-use in web frameworks.
 
 
 h2. Background
@@ -59,9 +59,9 @@ The argument specification is as follows, and *may* be implemented as either a c
 * @template@ — an *optional* on-disk absolute path
 * @**options@ — additional *optional* keyword arguments
 
-The renderer *must* return either a @unicode@ value or a 2-tuple of:
+The renderer *must* return a 2-tuple of:
 
-* @str@ — content type
+* @None@ or @str@ — content type
 * @unicode@ — content
 
 
@@ -86,4 +86,4 @@ An example of a light-weight wrapper for the Mako templating language is as foll
         return Template(filename=filename)
         
     def render(self, template, data, **options):
-        return template.render_unicode(**data)</code></pre>
+        return None, template.render_unicode(**data)</code></pre>
