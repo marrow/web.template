@@ -3,7 +3,7 @@
 try:
     from json import dumps
 
-except ImportError:
+except ImportError: # pragma: no cover
     try:
         from simplejson import dumps
     
