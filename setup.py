@@ -68,7 +68,7 @@ setup(
             ],
         
         entry_points = {
-                'web.templating': [
+                'alacarte': [
                         'json = alacarte.serialize.json_:render',
                         'bencode = alacarte.serialize.bencode:render',
                         'yaml = alacarte.serialize.yaml_:render',
