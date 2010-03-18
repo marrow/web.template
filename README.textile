@@ -7,7 +7,7 @@ h2. Background
 
 There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
 
-An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new frameworks.
+An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new templating engines.
 
 The onus for ease of deployment should be on the templating engine creator, not the framework creator or front-end web developer.
 
