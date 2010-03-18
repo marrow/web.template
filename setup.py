@@ -12,10 +12,10 @@ except ImportError:
 
 from setuptools import setup, find_packages
 
-if sys.version_info <= (2, 5):
-    raise SystemExit("Python 2.5 or later is required.")
+if sys.version_info < (2, 5):
+    raise SystemExit("Python 2.5 or later is required as 2.4 support requires too much cruft. -- BDFL")
 
-execfile(os.path.join("cti", "release.py"))
+execfile(os.path.join("alacarte", "release.py"))
 
 
 setup(
@@ -40,7 +40,7 @@ setup(
                 'coverage',
                 'Genshi',
                 'Mako',
-                'TurboCheetah',
+                # 'TurboCheetah',
                 'PyYAML'
             ],
         
@@ -59,28 +59,28 @@ setup(
         zip_safe = True,
         
         namespace_packages = [
-                'cti',
-                'cti.serializers',
-                'cti.templating'
+                'alacarte',
+                'alacarte.serialize',
+                'alacarte.template'
             ],
         
         entry_points = {
                 'web.templating': [
-                        'json = cti.serializers.json_:render',
-                        'bencode = cti.serializers.bencode:render',
-                        'yaml = cti.serializers.yaml_:render',
-                        'pickle = cti.serializers.pickle_:render_pickle',
-                        'cpickle = cti.serializers.pickle_:render_cpickle',
-                        'marshal = cti.serializers.marshal_:render',
+                        'json = alacarte.serialize.json_:render',
+                        'bencode = alacarte.serialize.bencode:render',
+                        'yaml = alacarte.serialize.yaml_:render',
+                        'pickle = alacarte.serialize.pickle_:render_pickle',
+                        'cpickle = alacarte.serialize.pickle_:render_cpickle',
+                        'marshal = alacarte.serialize.marshal_:render',
                         
-                        'sprintf = cti.templating.sprintf:render',
-                        'formatter = cti.templating.formatter:render',
-                        'template = cti.templating.template:render',
+                        'sprintf = alacarte.template.sprintf:render',
+                        'formatter = alacarte.template.formatter:render',
+                        'template = alacarte.template.template:render',
                         
-                        'genshi = cti.templating.genshi_:Genshi',
-                        'jinja2 = cti.templating.jinja2_:Jinja2',
-                        'mako = cti.templating.mako_:Mako',
-                        'cheetah = cti.templating.cheetah_:Cheetah',
+                        'genshi = alacarte.template.genshi_:Genshi',
+                        'jinja2 = alacarte.template.jinja2_:Jinja2',
+                        'mako = alacarte.template.mako_:Mako',
+                        'cheetah = alacarte.template.cheetah_:Cheetah',
                     ]
             }
     )

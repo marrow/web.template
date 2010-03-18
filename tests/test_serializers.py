@@ -2,44 +2,50 @@
 
 import sys
 
+from functools import partial
 from unittest import TestCase
 
-from cti.core import Engines
+from alacarte.core import Engines
 
 
+def serializer(engine, expected, *args, **kw):
+    assert engine(*args, **kw) == expected, "%r != %r" % (engine(*args, **kw), expected)
 
-class TestSerializers(TestCase):
-    def setUp(self):
-        self.render = Engines()
+
+def test_builtin_serializers():
+    render = Engines()
     
-    def test_bencode_basic(self):
-        self.assertEqual(self.render.bencode("foo", kind='basic'), ('application/x-bencode', '3:foo'))
+    tests = [
+            (render.bencode, ("foo", ),  dict(kind='basic'), ('application/x-bencode', '3:foo')),
+            (render.bencode, (u"foo", ), {}, ('application/x-bencode', 'u3:foo')),
+            (render.json,    ("foo", ),  {}, ('application/json', '"foo"')),
+            (render.pickle,  ("foo", ),  {}, ('application/octet-stream', "S'foo'\np0\n.")),
+            (render.cpickle, ("foo", ),  {}, ('application/octet-stream', "S'foo'\np1\n.")),
+            (render.yaml,    ("foo", ),  {}, ('application/x-yaml', 'foo\n...\n'))
+        ]
     
-    def test_bencode_enhanced(self):
-        self.assertEqual(self.render.bencode(u"foo"), ('application/x-bencode', 'u3:foo'))
+    # Marshal is version-specific.
+    if sys.version_info < (2, 6):
+        tests.append((render.marshal, ("foo", ),  {}, ('application/octet-stream', 't\x03\x00\x00\x00foo')))
     
-    def test_json(self):
-        self.assertEqual(self.render.json("foo"), ('application/json', '"foo"'))
+    elif sys.version_info < (3, 0):
+        tests.append((render.marshal, ("foo", ),  {}, ('application/octet-stream', 's\x03\x00\x00\x00foo')))
     
-    def test_simplejson(self):
-        sys.modules['json'] = None
-        
-        if 'cti.serializers.json_' in sys.modules:
-            del sys.modules['cti.serializers.json_']
-        
-        self.assertEqual(self.render.json("foo"), ('application/json', '"foo"'))
-        
-        del sys.modules['json']
-        # del sys.modules['cti.serializers.json_']
-    
-    def test_marshal(self):
-        self.assertEqual(self.render.marshal("foo"), ('application/octet-stream', 't\x03\x00\x00\x00foo'))
-    
-    def test_pickle(self):
-        self.assertEqual(self.render.pickle("foo"), ('application/octet-stream', "S'foo'\np0\n."))
-    
-    def test_cpickle(self):
-        self.assertEqual(self.render.cpickle("foo"), ('application/octet-stream', "S'foo'\np1\n."))
-    
-    def test_yaml(self):
-        self.assertEqual(self.render.yaml("foo"), ('application/x-yaml', 'foo\n...\n'))
+    for engine, args, kw, expected in tests:
+        yield partial(serializer, engine, expected, *args, **kw)
+
+
+# class TestSerializers(TestCase):
+#     def setUp(self):
+#         self.render = Engines()
+#     
+#     def test_simplejson(self):
+#         json_ = sys.modules['json']
+#         sys.modules['json'] = None
+#         
+#         if 'alacarte.serialize.json_' in sys.modules:
+#             del sys.modules['alacarte.serialize.json_']
+#         
+#         self.assertEqual(self.render.json("foo"), ('application/json', '"foo"'))
+#         
+#         sys.modules['json'] = json_

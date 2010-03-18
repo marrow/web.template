@@ -12,14 +12,14 @@ def render(data, template=None, string=None, content_type='text/plain'):
     
     Simple (string-based) usage:
     
-        >>> from cti.core import Engines
+        >>> from alacarte.core import Engines
         >>> render = Engines()
         >>> render('sprintf:', dict(hello="world"), string="Hello %(hello)s!")
         ('application/json', 'Hello world!')
     
     File-based usage:
     
-        >>> from cti.core import Engines
+        >>> from alacarte.core import Engines
         >>> render = Engines()
         >>> render('sprintf:./tests/templates/hello.txt', dict(hello="world"))
         ('application/json', 'Hello world!')

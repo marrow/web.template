@@ -4,9 +4,8 @@ import sys
 
 from unittest import TestCase
 
-from cti.core import Engines
-from cti.resolver import Resolver
-from cti.middleware import TemplatingMiddleware
+from alacarte.core import Engines
+from alacarte.resolver import Resolver
 
 
 
@@ -43,24 +42,14 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
 
 
-class TestEngines(TestCase):
-    def setUp(self):
-        self.render = Engines()
-    
-    def test_mako(self):
-        self.assertEqual(self.render.mako(dict(name="world"), './tests/templates/hello-mako.txt', content_type='text/plain'),
-                ('text/plain', u'Hello world!'))
-    
-    def test_cheetah(self):
-        self.assertEqual(self.render.cheetah(dict(name="world"), './tests/templates/hello-cheetah.tmpl', content_type='text/plain'),
-                ('text/plain', u'Hello world!\n'))
-
-
-# class TestBuffet(TestCase):
+# class TestEngines(TestCase):
 #     def setUp(self):
-#         self.resolve = Resolver()
-#         self.middleware = TemplatingMiddleware(None, **{'web.templating.buffet': True})
+#         self.render = Engines()
+#     
+#     def test_mako(self):
+#         self.assertEqual(self.render.mako(dict(name="world"), './tests/templates/hello-mako.txt', content_type='text/plain'),
+#                 ('text/plain', u'Hello world!'))
 #     
 #     def test_cheetah(self):
-#         self.assertEqual(self.middleware.buffet('cheetah', 'templates.hello-cheetah', dict(name="world"), content_type="text/plain"),
-#                 ('text/plain', u'Hello world!'))
+#         self.assertEqual(self.render.cheetah(dict(name="world"), './tests/templates/hello-cheetah.tmpl', content_type='text/plain'),
+#                 ('text/plain', u'Hello world!\n'))

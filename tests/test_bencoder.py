@@ -4,7 +4,7 @@ import sys
 
 from unittest import TestCase
 
-from cti.serializers import bencode
+from alacarte.serialize import bencode
 
 
 

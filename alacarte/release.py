@@ -3,14 +3,14 @@
 """Release information about the Common Templating Interface."""
 
 
-name = "TemplateInterface"
+name = "alacarte"
 version = "0.5.4"
 
 summary = "A common templating interface for Python applications."
 description = """"""
 author = "Alice Bevan-McGregor"
-email = "alice+cti@gothcandy.com"
-url = "http://github.com/GothAlice/TemplateInterface/"
-download_url = "http://cheeseshop.python.org/pypi/TemplateInterface/"
+email = "alice@gothcandy.com"
+url = "http://github.com/GothAlice/alacarte/"
+download_url = "http://cheeseshop.python.org/pypi/alacarte/"
 copyright = "© 2009-2010 Alice Bevan-McGregor"
 license = "MIT"

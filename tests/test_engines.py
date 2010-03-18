@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from cti.core import Engines
+from alacarte.core import Engines
 
 
 class TestEnginesDictCommonUsage(TestCase):
@@ -11,14 +11,14 @@ class TestEnginesDictCommonUsage(TestCase):
         
         self.assertTrue('json' in render)
         self.assertTrue(callable(render.json))
-        self.assertEqual(render.json.defaults, dict())
+        self.assertEqual(render.json.config, dict())
     
     def test_defaults(self):
         render = Engines(json=dict(content_type="foo"))
-        self.assertEqual(render.json.defaults, dict(content_type="foo"))
+        self.assertEqual(render.json.config, dict(content_type="foo"))
         
-        render.json.defaults = dict(content_type="bar")
-        self.assertEqual(render.json.defaults, dict(content_type="bar"))
+        render.json.config = dict(content_type="bar")
+        self.assertEqual(render.json.config, dict(content_type="bar"))
     
     def test_engine_func(self):
         def engine(data, template=None):
@@ -28,6 +28,8 @@ class TestEnginesDictCommonUsage(TestCase):
         render.raw = engine
         
         self.assertEqual(render.raw("foo"), ('text/plain', 'foo'))
+        
+        del render.raw
     
     def test_engine_class(self):
         class Engine(object):
@@ -38,6 +40,12 @@ class TestEnginesDictCommonUsage(TestCase):
         render.raw = Engine
         
         self.assertEqual(render.raw("foo"), ('text/plain', 'foo'))
+        
+        del render.raw
+    
+    def test_bad_engine_name(self):
+        render = Engines()
+        self.assertRaises(ValueError, lambda: render('text/html:'))
     
     def test_bad_engine_assignment(self):
         render = Engines()

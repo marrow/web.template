@@ -4,7 +4,7 @@ import os
 
 from pkg_resources import resource_listdir, resource_filename
 
-from cti.util import Cache
+from alacarte.util import Cache
 
 
 __all__ = ['Resolver']

@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from cti.util import Cache
+from alacarte.util import Cache
 
 
 class TestCommonUsage(TestCase):
