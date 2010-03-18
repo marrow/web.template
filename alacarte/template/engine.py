@@ -39,7 +39,7 @@ class Engine(object):
         options.update(kw)
         
         if not template:
-            return self.render(self.load(None, options), data, options)
+            return self.render(self.prepare(None, **options), data, **options)
         
         try:
             tmpl, mtime = self.cache[template]
@@ -48,31 +48,35 @@ class Engine(object):
             tmpl, mtime = None, None
         
         if tmpl is None or (self.monitor and stat(template).st_mtime > mtime):
-            print "got here"
-            tmpl, mtime = self.cache[template] = self.load(template, options), stat(template).st_mtime
+            tmpl, mtime = self.cache[template] = self.prepare(template, **options), stat(template).st_mtime
         
-        return self.render(tmpl, data, options)
+        print "ie", repr(options)
+        return self.render(tmpl, data, **options)
     
-    def load(self, filename, options):
+    def prepare(self, filename, **options):
         """Optionally overridden in a sub-class, this returns a template object usable by the render method.
         
         By default this loads the template from the given filename, or the "string" option, if specified.
+        When subclassing you can choose to keep this behaviour or roll your own by optionally using super.
         
-        Also utilizes a decoding (defaulting to 'utf8', overridden by the 'encoding' option) if needed.
+        Also utilizes unicode decoding (defaulting to 'utf8', overridden by the 'encoding' option) if needed.
         """
         
         if not filename:
-            return options['string']
+            print 'prep', repr(options)
+            content = options['string']
+            del options['string']
+            return content
         
         with open(filename) as f:
             content = f.read()
             
             if not isinstance(content, unicode):
-                content = content.decode(options.get('encoding', 'utf8'))
+                content = content.decode(options.get('encoding', 'utf8')) if isinstance(content, str) else content
         
         return content
     
-    def render(self, template, data, options):
+    def render(self, template, data, **options):
         """Implemented by a sub-class, this returns the 2-tuple of mimetype and unicode content."""
         
         raise NotImplementedError

@@ -33,5 +33,5 @@ class SprintfEngine(Engine):
             None: 'text/plain'
         }
     
-    def render(self, template, data, options):
+    def render(self, template, data, **options):
         return self.mapping[None], template % data

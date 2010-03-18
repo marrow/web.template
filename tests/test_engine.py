@@ -9,11 +9,11 @@ from alacarte.core import Engine
 
 
 class MyEngine(Engine):
-    def load(self, filename, options):
+    def prepare(self, filename, **options):
         assert 'foo' in options, repr(options)
         return ('foo', 'bar')
     
-    def render(self, template, data, options):
+    def render(self, template, data, **options):
         assert 'bar' in options, repr(options)
         assert template == ('foo', 'bar'), repr(template)
         return 'text/plain', (template, data, options)
@@ -24,13 +24,14 @@ class SprintfEngine(Engine):
         super(SprintfEngine, self).__init__(*args, **kw)
         self.i = 0
         
-    def load(self, filename, options):
+    def prepare(self, filename, **options):
         self.i += 1
         
         with open(filename) as f:
             return (self.i, f.read())
     
-    def render(self, template, data, options):
+    def render(self, template, data, **options):
+        print repr(template)
         val, f = template
         return 'text/plain', (val, (f % data))
 
@@ -68,4 +69,4 @@ class TestEngineBaseClass(TestCase):
     def test_interface(self):
         engine = Engine()
         
-        self.assertRaises(NotImplementedError, lambda: engine.render(None, None, None))
+        self.assertRaises(NotImplementedError, lambda: engine.render(None, None))

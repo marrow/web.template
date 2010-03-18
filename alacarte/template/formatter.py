@@ -44,7 +44,7 @@ class FormatterEngine(Engine):
             None: 'text/plain'
         }
     
-    def render(self, template, data, options):
+    def render(self, template, data, **options):
         """Implemented by a sub-class, this returns the 2-tuple of mimetype and unicode content."""
         
         return self.mapping[None], renderer.vformat(

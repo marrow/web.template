@@ -2,6 +2,8 @@
 
 import pkg_resources
 import warnings
+import inspect
+import collections
 
 from functools import partial
 
@@ -11,24 +13,6 @@ from alacarte.util import Cache
 
 __all__ = ['Engines']
 
-
-
-class EngineProxy(object):
-    def __init__(self, engine, config=dict()):
-        self.engine = engine
-        self.config = config
-    
-    def __call__(self, *args, **kw):
-        options = dict(self.config)
-        options.update(kw)
-        
-        if isinstance(self.engine, pkg_resources.EntryPoint):
-            self.engine = self.engine.load()
-        
-        if isinstance(self.engine, type):
-            self.engine = self.engine(**options)
-        
-        return self.engine(*args, **options)
 
 
 class Engines(dict):
@@ -46,6 +30,9 @@ class Engines(dict):
         """Engines creates a Resolver instance and configures Distribute
         entry point iteration.
         
+        The container argument allows you to supply an on-disk path
+        which can contain .egg packages to search for engines.
+        
         You may pass additional keyword arguments to pre-configure
         engine options.  Engine options will either be merged with
         the options passed at runtime or passed during engine
@@ -56,9 +43,15 @@ class Engines(dict):
         super(Engines, self).__init__()
         
         self.resolve = Resolver(default, cache)
+        self.options = collections.defaultdict(dict)
+        self.options.update(kw)
         
         collection = pkg_resources.WorkingSet()
-        collection.subscribe(partial(self._distributions, config=kw))
+        
+        if container:
+            collection.add_entry(container)
+        
+        collection.subscribe(self._distributions)
     
     def __call__(self, template, data=None, **kw):
         """Resolve and execute the given template, passing data to the engine."""
@@ -72,28 +65,35 @@ class Engines(dict):
             # TODO: Lookup by mimetype.
             raise ValueError('You can not currently request an engine by mimetype.')
         
+        print "calling"
         return self[engine](data=data, template=filename, **kw)
     
-    def __setitem__(self, name, value):
-        if not callable(value):
-            raise TypeError("Engines must be callable, a bare function, method, or callable class instance.")
+    def __getitem__(self, name):
+        item = super(Engines, self).__getitem__(name)
         
-        if isinstance(value, EngineProxy):
-            return super(Engines, self).__setitem__(name, value)
+        if inspect.isroutine(item):
+            print "is call"
+            return item
         
-        return super(Engines, self).__setitem__(name, EngineProxy(value))
+        if hasattr(item, 'load'):
+            print "is entry"
+            item = item.load()
+        
+        if inspect.isclass(item):
+            print "is class"
+            item = item(**self.options[name])
+        
+        print "writing back"
+        self[name] = item
+        return item
     
     def __getattr__(self, name):
         return self[name]
     
-    def __setattr__(self, name, value):
-        if name.startswith('_'): self.__dict__[name] = value
-        self[name] = value
-    
     def __delattr__(self, name):
         del self[name]
     
-    def _distributions(self, dist, config):
+    def _distributions(self, dist):
         entries = dist.get_entry_map('web.templating')
         
         if entries:
@@ -108,4 +108,4 @@ class Engines(dict):
         if not entries: return
         
         for name, engine in entries.iteritems():
-            self[name] = EngineProxy(engine, config.get(name, dict()))
+            self[name] = engine
