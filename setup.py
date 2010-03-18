@@ -61,7 +61,10 @@ setup(
         namespace_packages = [
                 'alacarte',
                 'alacarte.serialize',
-                'alacarte.template'
+                'alacarte.template',
+                'cti',
+                'cti.serializers',
+                'cti.templating'
             ],
         
         entry_points = {
