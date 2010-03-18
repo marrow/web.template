@@ -8,4 +8,4 @@ warnings.warn(
 import web.extras.templating
 from web.extras.templating import *
 
-__all__ = webcore.extras.templating.__all__
+__all__ = web.extras.templating.__all__
