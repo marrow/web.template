@@ -72,9 +72,9 @@ An engine *may* be defined as a simple function. Simple functions *must not* sto
 <pre><code>def helloTemplate(data=dict(name='world'), template=None, **options):
     return 'text/plain', u"Hello %(name)s!" % data</code></pre>
 
-If an engine is a new-style class (that does not subclass _à la carte_'s @Engine@ helper class) initial options are passed to the @__init__@ method (assigned previously to @Engines().options@) with render-time options passed to @__call__@.
+If an engine is a new-style class (that does not subclass _à la carte's_ @Engine@ helper class) initial options are passed to the @__init__@ method (assigned previously to @Engines().options@) with render-time options passed to @__call__@.
 
-If you wish to use the @Engine@ helper class you get template caching and automatic reloading of on-disk templates that are modified between calls.  There are two methods you must define in your subclass, and you can override @__init__@ to perform custom initialization, and @__call__@ to override the :
+If you wish to use the @Engine@ helper class you get template caching and automatic reloading of on-disk templates that are modified between calls.  There are two methods you *must* define in your subclass, and you can override @__init__@ to perform custom initialization, and @__call__@ to override the template generation.
 
 * @prepare(filename, **options)@ — load and return a template object for the cache
 * @render(template, data, **options)@ — render and return a finished template

@@ -2,7 +2,7 @@
 
 from threading import RLock
 
-from cti.core import Engine
+from alacarte.core import Engine
 
 try:
     from Cheetah.Template import Template

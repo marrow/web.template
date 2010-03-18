@@ -2,8 +2,8 @@
 
 from os import path
 
-from cti.core import Engine
-from cti.util import Cache
+from alacarte.core import Engine
+from alacarte.util import Cache
 
 try:
     from genshi.input import ET, HTML, XML

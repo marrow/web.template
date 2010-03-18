@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-from cti.core import Engine
-from cti.middleware import resolve
+from alacarte.core import Engine
+from alacarte.middleware import resolve
 
 try:
     from mako.template import Template
@@ -14,11 +14,11 @@ __all__ = ['Mako']
 
 
 class Mako(Engine):
-    def load(self, filename, **options):
+    def prepare(self, filename, **options):
         return self.get_template(filename)
     
     def render(self, template, data, **options):
-        return self.mimetype, template.render_unicode(**data)
+        return template.render_unicode(**data)
 
     def get_template(self, uri):
         filename = resolve(uri)[1]
