@@ -16,7 +16,7 @@ __all__ = ['Cheetah']
 
 
 class Cheetah(Engine):
-    def load(self, filename, **options):
+    def prepare(self, filename, **options):
         return Template(file=filename), RLock()
     
     def render(self, template, data, **options):

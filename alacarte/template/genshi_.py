@@ -27,7 +27,7 @@ class Genshi(Engine):
         self.genshi_monitor = self.monitor
         self.monitor = False
     
-    def load(self, filename, kind="markup", i18n=None, **options):
+    def prepare(self, filename, kind="markup", i18n=None, **options):
         bpath = path.dirname(filename)
         
         def template_loaded(template):
