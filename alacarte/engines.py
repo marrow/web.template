@@ -65,25 +65,20 @@ class Engines(dict):
             # TODO: Lookup by mimetype.
             raise ValueError('You can not currently request an engine by mimetype.')
         
-        print "calling"
         return self[engine](data=data, template=filename, **kw)
     
     def __getitem__(self, name):
         item = super(Engines, self).__getitem__(name)
         
         if inspect.isroutine(item):
-            print "is call"
             return item
         
         if hasattr(item, 'load'):
-            print "is entry"
             item = item.load()
         
         if inspect.isclass(item):
-            print "is class"
             item = item(**self.options[name])
         
-        print "writing back"
         self[name] = item
         return item
     

@@ -31,7 +31,6 @@ class SprintfEngine(Engine):
             return (self.i, f.read())
     
     def render(self, template, data, **options):
-        print repr(template)
         val, f = template
         return 'text/plain', (val, (f % data))
 

@@ -50,7 +50,6 @@ class Engine(object):
         if tmpl is None or (self.monitor and stat(template).st_mtime > mtime):
             tmpl, mtime = self.cache[template] = self.prepare(template, **options), stat(template).st_mtime
         
-        print "ie", repr(options)
         return self.render(tmpl, data, **options)
     
     def prepare(self, filename, **options):
@@ -63,7 +62,6 @@ class Engine(object):
         """
         
         if not filename:
-            print 'prep', repr(options)
             content = options['string']
             del options['string']
             return content
