@@ -3,7 +3,7 @@
 from os import path
 
 try:
-    from jinja2 import Environment, BaseLoader
+    from jinja2 import Environment, BaseLoader, TemplateNotFound
 
 except ImportError:
     raise ImportError("You must install the jinja2 package.")
@@ -34,7 +34,7 @@ class AbsolutePathLoader(BaseLoader):
         finally:
             f.close()
         
-        mtime = path.getmtime(path)
+        mtime = path.getmtime(filename)
         def uptodate():
             try:
                 return path.getmtime(filename) == mtime
