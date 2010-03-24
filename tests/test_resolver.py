@@ -1,5 +1,6 @@
 # encoding: utf-8
 
+import os
 from unittest import TestCase
 
 from alacarte.core import Resolver
@@ -13,6 +14,7 @@ class TestResolver(TestCase):
         engine, path = self.resolve('alacarte/core.py')
         
         self.assertEqual(engine, None)
+        self.assertEqual(path[0], '/')
         self.assertEqual(path.rsplit('/', 2)[-2:], ['alacarte', 'core.py'])
     
     def test_deep_file_cache(self):
@@ -36,11 +38,25 @@ class TestResolver(TestCase):
         else:
             self.fail()
     
-    def test_absolute(self):
-        engine, path = self.resolve('/tmp/foo')
+    def test_absolute_nix(self):
+        engine, package, path = self.resolve.parse('/tmp/foo')
+        
+        self.assertEqual(engine, None)
+        self.assertEqual(package, None)
+        self.assertEqual(path, '/tmp/foo')
+    
+    def test_absolute_win(self):
+        engine, package, path = self.resolve.parse('C:\\tmp\\foo')
+        
+        self.assertEqual(engine, None)
+        self.assertEqual(package, None)
+        self.assertEqual(path, 'C:\\tmp\\foo')
         
     def test_relative(self):
         engine, path = self.resolve('./tmp/foo')
+        
+        self.assertEqual(engine, None)
+        self.assertEqual(path, os.path.normpath(os.path.abspath('./tmp/foo')))
     
     def test_bare(self):
         engine, path = self.resolve('json:')

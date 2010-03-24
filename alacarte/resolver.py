@@ -20,9 +20,14 @@ class Resolver(Cache):
         # Split the engine and template parts.
         engine, _, template = path.rpartition(':')
         
+        # Handle Windows paths.
+        if engine and len(engine) == 1:
+            template = engine + ':' + template
+            engine = ''
+        
         if not engine: engine = self.default
         if not template: return (engine, None, None)
-        if template[0] in ('/', '.'): return (engine, None, template)
+        if template[0] in ('/', '.') or template[1] == ':': return (engine, None, template)
         package, _, path = template.partition('/')
         
         return (engine, package, path if path else None)
