@@ -3,13 +3,11 @@
 from os import path
 
 from alacarte.core import Engine
-from alacarte.util import Cache
 
 try:
     from genshi.input import ET, HTML, XML
     from genshi.filters import Translator
     from genshi.template import TemplateLoader, TextTemplate, MarkupTemplate
-    from genshi.template.loader import TemplateNotFound
 
 except ImportError:
     raise ImportError('You must install the genshi package.')

@@ -5,10 +5,7 @@ import warnings
 import inspect
 import collections
 
-from functools import partial
-
 from alacarte.resolver import Resolver
-from alacarte.util import Cache
 
 
 __all__ = ['Engines']

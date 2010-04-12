@@ -4,11 +4,10 @@ from __future__ import with_statement
 
 from os import stat
 
-from alacarte.resolver import Resolver
 from alacarte.util import Cache
 
 
-__all__ = ['Engines']
+__all__ = ['Engine']
 
 
 
