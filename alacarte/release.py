@@ -4,7 +4,7 @@
 
 
 name = "alacarte"
-version = "0.5.4"
+version = "0.6.1"
 
 summary = "A common templating interface for Python applications."
 description = """"""

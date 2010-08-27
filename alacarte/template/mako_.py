@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 from alacarte.core import Engine
-from alacarte.middleware import resolve
+from alacarte.resolver import Resolver
 
 try:
     from mako.template import Template
@@ -11,6 +11,9 @@ except ImportError:
 
 
 __all__ = ['Mako']
+
+
+resolve = Resolver()
 
 
 class Mako(Engine):
