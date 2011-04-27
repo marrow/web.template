@@ -29,13 +29,15 @@ class Genshi(Engine):
         bpath = path.dirname(filename)
         
         def template_loaded(template):
-            template.filters.insert(0, Translator(i18n.ugettext))
+            template.filters.insert(0, Translator(i18n))
         
         try:
             loader = self.cache[bpath]
         
         except KeyError:
-            loader = self.cache[bpath] = TemplateLoader([bpath], auto_reload=self.genshi_monitor, callback=None if i18n is None else template_loaded)
+            callback = template_loaded if i18n else None
+            loader = self.cache[bpath] = TemplateLoader([bpath],
+                auto_reload=self.genshi_monitor, callback=callback)
         
         return loader, filename
     
