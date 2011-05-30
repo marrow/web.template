@@ -3,13 +3,6 @@
 
 import sys, os
 
-try:
-    from distribute_setup import use_setuptools
-    use_setuptools()
-
-except ImportError:
-    pass
-
 from setuptools import setup, find_packages
 
 if sys.version_info < (2, 5):
@@ -19,20 +12,19 @@ execfile(os.path.join("alacarte", "release.py"))
 
 
 setup(
-        name = name,
+        name = "marrow.render",
         version = version,
         
-        description = summary,
-        long_description = description,
-        author = author,
-        author_email = email,
-        url = url,
-        download_url = download_url,
-        license = license,
+        description = "A common templating and serialization interface for Python applications.",
+        long_description = ,
+        author = "Alice Bevan-McGregor and contributors",
+        author_email = "alice+marrow@gothcandy.com",
+        url = "http://www.marrowproject.com/render",
+        download_url = "http://cheeseshop.python.org/pypi/marrow.render/",
+        license = "MIT",
         keywords = '',
         
-        install_requires = [
-            ],
+        install_requires = [],
         
         test_suite = 'nose.collector',
         tests_require = [
@@ -40,12 +32,11 @@ setup(
                 'coverage',
                 'Genshi',
                 'Mako',
-                # 'TurboCheetah',
                 'PyYAML'
             ],
         
         classifiers = [
-                "Development Status :: 4 - Beta",
+                "Development Status :: 5 - Production/Stable",
                 "Environment :: Console",
                 "Intended Audience :: Developers",
                 "License :: OSI Approved :: MIT License",
@@ -59,6 +50,10 @@ setup(
         zip_safe = True,
         
         namespace_packages = [
+                'marrow',
+                'marrow.render',
+                'marrow.render.serialize',
+                'marrow.render.template',
                 'alacarte',
                 'alacarte.serialize',
                 'alacarte.template',
@@ -68,22 +63,22 @@ setup(
             ],
         
         entry_points = {
-                'alacarte': [
-                        'json = alacarte.serialize.json_:render',
-                        'bencode = alacarte.serialize.bencode:render',
-                        'yaml = alacarte.serialize.yaml_:render',
-                        'pickle = alacarte.serialize.pickle_:render_pickle',
-                        'cpickle = alacarte.serialize.pickle_:render_cpickle',
-                        'marshal = alacarte.serialize.marshal_:render',
+                'marrow.render': [
+                        'json = marrow.render.serialize.json_:render',
+                        'bencode = marrow.render.serialize.bencode:render',
+                        'yaml = marrow.render.serialize.yaml_:render',
+                        'pickle = marrow.render.serialize.pickle_:render_pickle',
+                        'cpickle = marrow.render.serialize.pickle_:render_cpickle',
+                        'marshal = marrow.render.serialize.marshal_:render',
                         
-                        'sprintf = alacarte.template.sprintf:SprintfEngine',
-                        'formatter = alacarte.template.formatter:FormatterEngine',
-                        'template = alacarte.template.template:render',
+                        'sprintf = marrow.render.template.sprintf:SprintfEngine',
+                        'formatter = marrow.render.template.formatter:FormatterEngine',
+                        'template = marrow.render.template.template:render',
                         
-                        'genshi = alacarte.template.genshi_:Genshi',
-                        'jinja2 = alacarte.template.jinja2_:Jinja2',
-                        'mako = alacarte.template.mako_:Mako',
-                        'cheetah = alacarte.template.cheetah_:Cheetah',
+                        'genshi = marrow.render.template.genshi_:Genshi',
+                        'jinja2 = marrow.render.template.jinja2_:Jinja2',
+                        'mako = marrow.render.template.mako_:Mako',
+                        'cheetah = marrow.render.template.cheetah_:Cheetah',
                     ]
             }
     )
