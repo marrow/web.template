@@ -3,8 +3,7 @@
 __all__ = ['render', 'CodecError', 'EncodeError', 'DecodeError', 'Encoding', 'ChunkedEncoder', 'Bencode', 'EnhancedBencode']
 
 
-
-def render(data, template=None, kind='enhanced'):
+def render(data, template=None, kind='enhanced', i18n=None, **kw):
     """A bencoding serializer templating language.
     
     Accepts the same extended arguments as the JSON dumps() function, see:

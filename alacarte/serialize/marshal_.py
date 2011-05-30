@@ -6,8 +6,7 @@ import marshal
 __all__ = ['render']
 
 
-
-def render(data, template=None, **kw):
+def render(data, template=None, i18n=None, **kw):
     """Serialize data using Python marshal standard library.
     
     Accepts the same extended arguments as the marshal.dumps() function, see:

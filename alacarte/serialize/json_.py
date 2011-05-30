@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 try:
-    from json import dumps
+    from simplejson import dumps
 
 except ImportError: # pragma: no cover
     try:
-        from simplejson import dumps
+        from json import dumps
     
     except ImportError: # pragma: no cover
         raise ImportError('Your version of Python requires that you install the simplejson package for JSON support.')
@@ -14,8 +14,7 @@ except ImportError: # pragma: no cover
 __all__ = ['render']
 
 
-
-def render(data, template=None, content_type='application/json', **kw):
+def render(data, template=None, content_type='application/json', i18n=None, **kw):
     """A basic JSON serializer templating language.
     
     Accepts the same extended arguments as the JSON dumps() function, see:

@@ -10,8 +10,7 @@ except ImportError: # pragma: no cover
 __all__ = ['render']
 
 
-
-def render(data, template=None, **kw):
+def render(data, template=None, i18n=None, **kw):
     """Serialize data using PyYAML.
     
     Accepts the same extended arguments as the PyYAML dump() function, see:

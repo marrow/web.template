@@ -7,8 +7,7 @@ import cPickle
 __all__ = ['render_pickle', 'render_cpickle']
 
 
-
-def render_pickle(data, template=None, **kw):
+def render_pickle(data, template=None, i18n=None, **kw):
     """Serialize data using the Python pickle standard library.
     
     Accepts the same extended arguments as the pickle.dumps() function, see:
@@ -20,7 +19,7 @@ def render_pickle(data, template=None, **kw):
     return 'application/octet-stream', pickle.dumps(data, **kw)
 
 
-def render_cpickle(data, template=None, **kw):
+def render_cpickle(data, template=None, i18n=None, **kw):
     """Serialize data using the Python cPickle standard library.
     
     Accepts the same extended arguments as the pickle.dumps() function, see:
@@ -28,5 +27,5 @@ def render_cpickle(data, template=None, **kw):
         http://www.python.org/doc/2.6/library/pickle.html#pickle.dumps
     
     """
-
+    
     return 'application/octet-stream', cPickle.dumps(data, **kw)
