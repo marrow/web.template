@@ -1,10 +1,12 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 from os import path, stat
 from threading import RLock
 
-from alacarte.core import Engine
-from alacarte.resolver import Resolver
+from marrow.render.core import Engine
+from marrow.render.resolver import Resolver
 
 try:
     import kajiki
@@ -14,7 +16,6 @@ except ImportError:
 
 
 __all__ = ['Kajiki']
-
 
 
 resolve = Resolver()

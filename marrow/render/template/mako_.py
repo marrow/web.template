@@ -1,7 +1,9 @@
 # encoding: utf-8
 
-from alacarte.core import Engine
-from alacarte.resolver import Resolver
+from __future__ import unicode_literals
+
+from marrow.render.core import Engine
+from marrow.render.resolver import Resolver
 
 try:
     from mako.template import Template
@@ -22,7 +24,7 @@ class Mako(Engine):
     
     def render(self, template, data, **options):
         return options.get('content_type', 'text/html'), template.render_unicode(**data)
-
+    
     def get_template(self, uri):
         filename = resolve(uri)[1]
         return Template(filename=filename, lookup=self)

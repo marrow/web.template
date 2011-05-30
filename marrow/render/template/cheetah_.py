@@ -1,8 +1,10 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 from threading import RLock
 
-from alacarte.core import Engine
+from marrow.render.core import Engine
 
 try:
     from Cheetah.Template import Template
@@ -12,7 +14,6 @@ except ImportError:
 
 
 __all__ = ['Cheetah']
-
 
 
 class Cheetah(Engine):

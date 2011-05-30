@@ -1,8 +1,10 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 from os import path
 
-from alacarte.core import Engine
+from marrow.render.core import Engine
 
 try:
     from genshi.input import ET, HTML, XML
@@ -14,7 +16,6 @@ except ImportError:
 
 
 __all__ = ['Genshi']
-
 
 
 class Genshi(Engine):

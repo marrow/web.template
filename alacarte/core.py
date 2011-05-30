@@ -1,9 +1,13 @@
 # encoding: utf-8
 
-from alacarte.engines import Engines
-from alacarte.resolver import Resolver
-from alacarte.template.engine import Engine
-from alacarte.util import Cache
+import warnings
+warnings.warn(
+        'Access to the common template interface via the "alacarte" package has been deprecated.\n'
+        'Update your imports to reference "marrow.render" instead.',
+        DeprecationWarning
+    )
 
+import marrow.render.core
+from marrow.render.core import *
 
-__all__ = ['Engine', 'Engines', 'Resolver', 'Cache']
+__all__ = marrow.render.core.__all__

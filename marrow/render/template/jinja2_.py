@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 from os import path
 
 try:
@@ -10,7 +12,6 @@ except ImportError:
 
 
 __all__ = ['Jinja2']
-
 
 
 class AbsolutePathLoader(BaseLoader):

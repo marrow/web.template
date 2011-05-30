@@ -1,12 +1,11 @@
 # encoding: utf-8
 
-from __future__ import with_statement
+from __future__ import unicode_literals
 
-from alacarte.template.engine import Engine
+from marrow.render.core import Engine
 
 
 __all__ = ['SprintfEngine']
-
 
 
 class SprintfEngine(Engine):
@@ -28,10 +27,5 @@ class SprintfEngine(Engine):
     
     """
     
-    mapping = {
-            'sprintf': 'text/plain',
-            None: 'text/plain'
-        }
-    
     def render(self, template, data, **options):
-        return self.mapping[None], template % data
+        return options.get('content_type', 'text/plain'), template % data

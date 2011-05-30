@@ -4,11 +4,10 @@ from __future__ import with_statement
 
 from os import stat
 
-from alacarte.util import Cache
+from marrow.render.util import Cache
 
 
 __all__ = ['Engine']
-
 
 
 class Engine(object):

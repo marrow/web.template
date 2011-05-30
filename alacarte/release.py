@@ -1,16 +1,13 @@
 # encoding: utf-8
 
-"""Release information about the Common Templating Interface."""
+import warnings
+warnings.warn(
+        'Access to the common template interface via the "alacarte" package has been deprecated.\n'
+        'Update your imports to reference "marrow.render" instead.',
+        DeprecationWarning
+    )
 
+import marrow.render.release
+from marrow.render.release import *
 
-name = "alacarte"
-version = "1.0.0"
-
-summary = "A common templating interface for Python applications."
-description = """"""
-author = "Alice Bevan-McGregor"
-email = "alice@gothcandy.com"
-url = "http://github.com/GothAlice/alacarte/"
-download_url = "http://cheeseshop.python.org/pypi/alacarte/"
-copyright = "© 2009-2011 Alice Bevan-McGregor"
-license = "MIT"
+__all__ = marrow.render.release.__all__

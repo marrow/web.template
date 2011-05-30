@@ -1,16 +1,17 @@
 # encoding: utf-8
 
-from __future__ import with_statement
+from __future__ import unicode_literals
+from __future__ import unicode_literals
 
 from string import Formatter
 
-from alacarte.template.engine import Engine
+from marrow.render.core import Engine
 
 
 __all__ = ['FormatterEngine']
 
-renderer = Formatter()
 
+renderer = Formatter()
 
 
 class FormatterEngine(Engine):
