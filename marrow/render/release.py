@@ -5,7 +5,7 @@
 from collections import namedtuple
 
 
-__all__ = ['version_info', 'version', 'copyright', 'colophon']
+__all__ = ['version_info', 'version', 'copyright']
 
 
 version_info = namedtuple('version_info', ('major', 'minor', 'micro', 'releaselevel', 'serial'))(1, 0, 0, 'final', 1)
