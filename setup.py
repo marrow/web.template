@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 if sys.version_info < (2, 5):
     raise SystemExit("Python 2.5 or later is required as 2.4 support requires too much cruft. -- BDFL")
 
-execfile(os.path.join("alacarte", "release.py"))
+execfile(os.path.join("marrow", "templating", "release.py"))
 
 
 setup(
@@ -19,7 +19,7 @@ setup(
         long_description = "",
         author = "Alice Bevan-McGregor and contributors",
         author_email = "alice+marrow@gothcandy.com",
-        url = "http://www.marrowproject.com/render",
+        url = "http://www.marrowproject.com/templating",
         download_url = "http://cheeseshop.python.org/pypi/marrow.templating/",
         license = "MIT",
         keywords = '',
