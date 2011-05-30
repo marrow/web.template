@@ -11,15 +11,15 @@ class TestResolver(TestCase):
         self.resolve = Resolver()
     
     def test_deep_file(self):
-        engine, path = self.resolve('marrow/render/core.py')
+        engine, path = self.resolve('marrow.templating/core.py')
         
         self.assertEqual(engine, None)
         self.assertEqual(path[0], '/')
-        self.assertEqual(path.rsplit('/', 2)[-2:], ['render', 'core.py'])
+        self.assertEqual(path.rsplit('/', 2)[-2:], ['templating', 'core.py'])
     
     def test_deep_file_cache(self):
-        result1 = self.resolve('marrow/render/core.py')
-        result2 = self.resolve('marrow/render/core.py')
+        result1 = self.resolve('marrow.templating/core.py')
+        result2 = self.resolve('marrow.templating/core.py')
         
         self.assertTrue(result1 is result2)
     
