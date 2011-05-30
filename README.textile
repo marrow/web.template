@@ -1,4 +1,4 @@
-h1(#title). Marrow Render
+h1(#title). Marrow Templating
 
 bq(subtitle). A universal templating engine and serialization API.
 
@@ -10,13 +10,17 @@ bq(byline). "https://github.com/marrow/marrow.templating":github-project
 
 
 
-h2(#what-is). %1.% What is Marrow Render?
+h2(#what-is). %1.% What is Marrow Templating?
 
+Marrow Templating is an attempt to produce a consistent, universal API for utilizing a variety of template rendering engines and data serialization formats.  Many web frameworks contain their own templating "helpers" which re-implement the same templating glue code over and over again and are often difficult or impossible to extend by non-core developers.
 
+Marrow Templating (formerly alacarte, formerly cti) has been designed to offer the lowest common denominator across engines while not restricting advanced engine capabilities.
 
-h3(#goals). %1.1.% Goals
+There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
 
+An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Buffet was strongly geared towards one templating engine, Genshi, was tweaked to offer enhanced embedding of alien templating languages within each-other, and was overly complex.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new templating engines.
 
+The onus for ease of deployment should be on the templating engine creator, not the framework creator or front-end web developer.
 
 
 h2(#installation). %2.% Installation
@@ -52,73 +56,43 @@ If you would like to make changes and contribute them back to the project, fork 
 
 h2(#basic). %3.% Basic Usage
 
+There are a number of ways to utilize Marrow Templating within your own application or framework.  The Engines object an attribute-access dictionary where the dictionary elements are entrypoint-based templating and serialization engines.  Alternatively, a configured Engines object can be called directly as a function and will determine automatically (based on the template path) which engine to utilize.  We will explore the latter option first.
+
+Create a new Engines instance like so:
+
+<pre><code>from marrow.templating.core import Engines
+render = Engines(default=None, cache=50, container=None)</code></pre>
+
+The arguments are as follows, and may be specified positionally:
+
+|_. Argument |_. Description |
+| @default@ | The default rendering engine to use. |
+| @cache@ | The number of template paths (and pre-processed templates) to cache. |
+| @container@ | An on-disk path to a folder containing @.egg@ files to use as engines. |
+
+h3(#basic-indirect). %3.1.% Indirect Engine Access
+
+This is the most common way to utilize Marrow Templating:
+
+<pre><code>mime, content = render('pkg.template', dict())</code></pre>
+
+The first argument is a template path specification; for details on the allowed values see "Section 4":#paths of this document.  The second argument is data for the template to consume.  Additional keyword arguments may be provided to pass 'options' to the template engine, such as a preference for a specific version of HTML.
+
+Returned are the MIME type (e.g. "text/plain", "text/html") and the rendered content.
 
 
-h2(#extending). %7.% Extending Marrow Render
+h3(#basic-direct). %3.2.% Direct Engine Access
 
-Marrow Render can be extended by the creation of additional templating engine and serialization adapters.  The API for each is quite simple.
+You can directly access the engines as attribute or dictionary lookups on the Engines instance.  For example:
 
+<pre><code>render.mako(data=data, template=filename)</code></pre>
 
-h2(#license). %8.% License
-
-Marrow Render has been released under the MIT Open Source license.
-
-
-h3(#license-mit). %8.1.% The MIT License
-
-Copyright (C) 2009-2011 Alice Bevan-McGregor and contributors.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+As per indirect access, additional keyword arguments can be passed as options to the engine.  One very important note, however, is that the template name must be a path to the template on-disk.  Serialization engines do not accept a template argument.  Return values are as per the indirect example.
 
 
+h2(#paths). %4.% Acceptable Path References
 
-fn1. In order to run the full test suite you need to install "pymta":http://www.schwarz.eu/opensource/projects/pymta/ and its dependencies.
-
-fn2. If "Pip":http://www.pip-installer.org/ is not available for you, you can use @easy_install@ instead. We have much love for Pip and "Distribute":http://packages.python.org/distribute/, though.
-
-
-
-
----
-
-
-
-<dl><dt><h1>à la carte</h1><p>|ˌä lä ˈkärt; lə|</p></dt><dd>A common templating and serialization interface for Python, esp. web applications.</dd><ol><li>adjective<dd>(of a menu or restaurant) listing or serving food that can be ordered as separate items, rather than part of a set meal.</dd><dd>(of food) available on such a menu.</dd></li><li>adverb<dd>as separately priced items from a menu, not as part of a set meal <i>: wine and good food served à la carte.</i></dd></li></ol></dl>
-
-The core of the API is for the generation of content from a named template, ostensibly on-disk though some engines support passing in strings instead of paths. Evaluated templates are returned as a 2-tuple of @(None or str(content_type), unicode(content))@, making _à la carte_ very useful for re-use in web frameworks.
-
-
-h2. Background
-
-There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
-
-An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new templating engines.
-
-The onus for ease of deployment should be on the templating engine creator, not the framework creator or front-end web developer.
-
-
-h2. Conventions Used in this Document
-
-This document will be written similar to an RFC.  The following is copied, with modification, from "RFC 2119":http://www.ietf.org/rfc/rfc2119.txt, for no other reason than that was the first result in the web search.
-
-# The word *must*, or the terms *required* or *shall*, mean that the definition is an absolute requirement of the specification.
-# The phrase *must not*, or the phrase *shall not*, mean that the definition is an absolute prohibition of the specification.
-# The word *should*, or the adjective *recommended*, mean that there may exist valid reasons in particular circumstances to ignore a particular item, but the full implications must be understood and carefully weighed before choosing a different course.
-# The phrase *should not*, or the phrase *not recommended* mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.
-# The word *may*, or the adjective *optional*, mean that an item is truly optional.  One developer may choose to include the item because a particular task requires it or because the developer feels that it enhances an application while another vendor may omit the same item.
-
-An implementation which does not include a particular option *must* be prepared to interoperate with another implementation which does include the option, though perhaps with reduced functionality. In the same vein an implementation which does include a particular option *must* be prepared to interoperate with another implementation which does not include the option (except, of course, for the feature the option provides.)
-
-
-h2. Application Programming Interfaces
-
-h3. Path Negotiation
-
-Support for:
+Marrow Templating supports the following template path syntaxes:
 
 * @'engine:package.templates.foo'@ — implicit filename extension, with 'best guess' from a prioritized list of default engines
 * @'engine:package.templates/foo.html'@ — explicit file path relative to package
@@ -127,16 +101,20 @@ Parts are optional; all of the following are legal:
 
 * @'json:'@ — pure engine, usually a serializer or a template loaded from an existing string
 * @'package.templates.foo'@ — defaulting the engine part, implicit filename extension
-* @'package/templates/foo.html'@ — defaulting the engine, explicit file path
+* @'package/templates/foo.html'@ — defaulting the engine, explicit file path within a package
 * @'/var/www/htdocs/index.html'@ — absolute path
 * @'./views/edit.html'@ _or_ @'../../templates/master.html'@ — relative paths
 
 Where the path is relative to is up to the framework making use of the template interface, though this defaults to the current working directory.
 
 
-h3. Engine API
+h2(#extending). %5.% Extending Marrow Templating
 
-The registered renderer (engine) callable *must* accept the following named arguments. These arguments are referenced by name but *should* be defined in this order to allow for easy manual use.  Renderers *should* also accept an unlimited list of additional keyword arguments (which *may* be called @options@, as it is with the provided default engines), which are additional values that can be passed in from a combination of a stored configuration and call-time value.
+Marrow Templating can be extended by the creation of additional templating engine and serialization adapters.  The API for each is quite simple.
+
+h3(#api). %5.1.% Engine API
+
+The registered renderer (engine) callable *must* accept the following named arguments. These arguments are referenced by name but *should* be defined in this order to allow for easy manual use.  Renderers *should* also accept an unlimited list of additional keyword arguments (which *may* be called @options@, as it is with the provided default engines), which are additional values that can be passed in from a combination of a stored configuration and call-time values.
 
 There are several attributes of the engine that are used internally for specific purposes.  All of these attributes are *optional*, and will default to @None@ if not present.
 
@@ -154,7 +132,7 @@ The renderer *must* return a 2-tuple of:
 * @unicode@ — content
 
 
-h4. Engine Forms
+h3(#forms). %5.2.% Engine Forms
 
 An engine *may* be defined as a simple function. Simple functions *must not* store state between calls.  If your template engine needs to keep state (e.g. a cache) then you *must* implement your engine interface as a new-style class.  An example of a simple function:
 
@@ -176,3 +154,25 @@ An example of a light-weight wrapper for the Mako templating language is as foll
         
     def render(self, template, data, **options):
         return None, template.render_unicode(**data)</code></pre>
+
+
+h2(#license). %6.% License
+
+Marrow Templating has been released under the MIT Open Source license.
+
+
+h3(#license-mit). %6.1.% The MIT License
+
+Copyright (C) 2009-2011 Alice Bevan-McGregor and contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+fn1. In order to run the full test suite you need to install "pymta":http://www.schwarz.eu/opensource/projects/pymta/ and its dependencies.
+
+fn2. If "Pip":http://www.pip-installer.org/ is not available for you, you can use @easy_install@ instead. We have much love for Pip and "Distribute":http://packages.python.org/distribute/, though.
