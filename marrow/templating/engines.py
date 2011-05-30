@@ -5,7 +5,7 @@ import warnings
 import inspect
 import collections
 
-from marrow.render.resolver import Resolver
+from marrow.templating.resolver import Resolver
 
 
 __all__ = ['Engines']
@@ -92,11 +92,11 @@ class Engines(dict):
         if entries:
             warnings.warn(
                     'The %s package has delcared "web.templating" or "alacarte" entry points.\n'
-                    'The these entry_point namespaces have been deprecated in favor of "marrow.render".' % dist.egg_name(),
+                    'The these entry_point namespaces have been deprecated in favor of "marrow.templating".' % dist.egg_name(),
                     DeprecationWarning
                 )
         
-        entries.update(dist.get_entry_map('marrow.render'))
+        entries.update(dist.get_entry_map('marrow.templating'))
         
         if not entries: return
         

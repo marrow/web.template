@@ -12,7 +12,7 @@ execfile(os.path.join("alacarte", "release.py"))
 
 
 setup(
-        name = "marrow.render",
+        name = "marrow.templating",
         version = version,
         
         description = "A common templating and serialization interface for Python applications.",
@@ -20,7 +20,7 @@ setup(
         author = "Alice Bevan-McGregor and contributors",
         author_email = "alice+marrow@gothcandy.com",
         url = "http://www.marrowproject.com/render",
-        download_url = "http://cheeseshop.python.org/pypi/marrow.render/",
+        download_url = "http://cheeseshop.python.org/pypi/marrow.templating/",
         license = "MIT",
         keywords = '',
         
@@ -51,9 +51,9 @@ setup(
         
         namespace_packages = [
                 'marrow',
-                'marrow.render',
-                'marrow.render.serialize',
-                'marrow.render.template',
+                'marrow.templating',
+                'marrow.templating.serialize',
+                'marrow.templating.template',
                 'alacarte',
                 'alacarte.serialize',
                 'alacarte.template',
@@ -63,22 +63,22 @@ setup(
             ],
         
         entry_points = {
-                'marrow.render': [
-                        'json = marrow.render.serialize.json_:render',
-                        'bencode = marrow.render.serialize.bencode:render',
-                        'yaml = marrow.render.serialize.yaml_:render',
-                        'pickle = marrow.render.serialize.pickle_:render_pickle',
-                        'cpickle = marrow.render.serialize.pickle_:render_cpickle',
-                        'marshal = marrow.render.serialize.marshal_:render',
+                'marrow.templating': [
+                        'json = marrow.templating.serialize.json_:render',
+                        'bencode = marrow.templating.serialize.bencode:render',
+                        'yaml = marrow.templating.serialize.yaml_:render',
+                        'pickle = marrow.templating.serialize.pickle_:render_pickle',
+                        'cpickle = marrow.templating.serialize.pickle_:render_cpickle',
+                        'marshal = marrow.templating.serialize.marshal_:render',
                         
-                        'sprintf = marrow.render.template.sprintf:SprintfEngine',
-                        'formatter = marrow.render.template.formatter:FormatterEngine',
-                        'template = marrow.render.template.template:render',
+                        'sprintf = marrow.templating.template.sprintf:SprintfEngine',
+                        'formatter = marrow.templating.template.formatter:FormatterEngine',
+                        'template = marrow.templating.template.template:render',
                         
-                        'genshi = marrow.render.template.genshi_:Genshi',
-                        'jinja2 = marrow.render.template.jinja2_:Jinja2',
-                        'mako = marrow.render.template.mako_:Mako',
-                        'cheetah = marrow.render.template.cheetah_:Cheetah',
+                        'genshi = marrow.templating.template.genshi_:Genshi',
+                        'jinja2 = marrow.templating.template.jinja2_:Jinja2',
+                        'mako = marrow.templating.template.mako_:Mako',
+                        'cheetah = marrow.templating.template.cheetah_:Cheetah',
                     ]
             }
     )

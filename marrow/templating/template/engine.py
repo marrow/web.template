@@ -4,7 +4,7 @@ from __future__ import with_statement
 
 from os import stat
 
-from marrow.render.util import Cache
+from marrow.templating.util import Cache
 
 
 __all__ = ['Engine']

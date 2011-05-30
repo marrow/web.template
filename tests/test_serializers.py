@@ -5,7 +5,7 @@ import sys
 from functools import partial
 from unittest import TestCase
 
-from marrow.render.core import Engines
+from marrow.templating.core import Engines
 
 
 def serializer(engine, expected, *args, **kw):
@@ -43,8 +43,8 @@ def test_builtin_serializers():
 #         json_ = sys.modules['json']
 #         sys.modules['json'] = None
 #         
-#         if 'marrow.render.serialize.json_' in sys.modules:
-#             del sys.modules['marrow.render.serialize.json_']
+#         if 'marrow.templating.serialize.json_' in sys.modules:
+#             del sys.modules['marrow.templating.serialize.json_']
 #         
 #         self.assertEqual(self.render.json("foo"), ('application/json', '"foo"'))
 #         

@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from marrow.render.util import Cache
+from marrow.templating.util import Cache
 
 
 class TestCommonUsage(TestCase):

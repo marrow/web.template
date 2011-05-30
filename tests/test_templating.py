@@ -4,8 +4,8 @@ import sys
 
 from unittest import TestCase
 
-from marrow.render.core import Engines
-from marrow.render.resolver import Resolver
+from marrow.templating.core import Engines
+from marrow.templating.resolver import Resolver
 
 
 

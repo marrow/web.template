@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from threading import RLock
 
-from marrow.render.core import Engine
+from marrow.templating.core import Engine
 
 try:
     from Cheetah.Template import Template

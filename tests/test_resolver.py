@@ -3,7 +3,7 @@
 import os
 from unittest import TestCase
 
-from marrow.render.core import Resolver
+from marrow.templating.core import Resolver
 
 
 class TestResolver(TestCase):
@@ -30,7 +30,7 @@ class TestResolver(TestCase):
     
     def test_ambiguous_error(self):
         try:
-            self.resolve('genshi:marrow.render.resolver')
+            self.resolve('genshi:marrow.templating.resolver')
         
         except ValueError:
             pass

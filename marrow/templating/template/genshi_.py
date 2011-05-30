@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from os import path
 
-from marrow.render.core import Engine
+from marrow.templating.core import Engine
 
 try:
     from genshi.input import ET, HTML, XML

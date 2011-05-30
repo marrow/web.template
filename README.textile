@@ -4,9 +4,9 @@ bq(subtitle). A universal templating engine and serialization API.
 
 bq(byline). (C) 2009-2011, Alice Bevan-McGregor and contributors.
 
-bq(byline). "https://github.com/marrow/marrow.render":github-project
+bq(byline). "https://github.com/marrow/marrow.templating":github-project
 
-[github-project]https://github.com/marrow/marrow.render
+[github-project]https://github.com/marrow/marrow.templating
 
 
 
@@ -21,25 +21,25 @@ h3(#goals). %1.1.% Goals
 
 h2(#installation). %2.% Installation
 
-Installing @marrow.render@ is easy, just execute the following in a terminal: [2]
+Installing @marrow.templating@ is easy, just execute the following in a terminal: [2]
 
-<pre><code>pip install marrow.render</code></pre>
+<pre><code>pip install marrow.templating</code></pre>
 
-If you add @marrow.render@ to the @install_requires@ argument of the call to @setup()@ in your application's @setup.py@ file, @marrow.render@ will be automatically installed and made available when your own application is installed.  We recommend using "less than" version numbers to ensure there are no unintentional side-effects when updating.  Use @"marrow.render<1.1"@ to get all bugfixes for the current release, and @"marrow.render<2.0"@ to get bugfixes and feature updates, but ensure that large breaking changes are ignored.
+If you add @marrow.templating@ to the @install_requires@ argument of the call to @setup()@ in your application's @setup.py@ file, @marrow.templating@ will be automatically installed and made available when your own application is installed.  We recommend using "less than" version numbers to ensure there are no unintentional side-effects when updating.  Use @"marrow.templating<1.1"@ to get all bugfixes for the current release, and @"marrow.templating<2.0"@ to get bugfixes and feature updates, but ensure that large breaking changes are ignored.
 
 
 h3(#install-dev). %2.1.% Development Version
 
-Development takes place on "GitHub":github in the "marrow.render":github-project project.  Issue tracking, documentation, and downloads are provided there.
+Development takes place on "GitHub":github in the "marrow.templating":github-project project.  Issue tracking, documentation, and downloads are provided there.
 
 Installing the current development version requires "Git":git, a distributed source code management system.  If you have Git, you can run the following to download and _link_ the development version into your Python runtime:
 
-<pre><code>git clone https://github.com/marrow/marrow.render.git
+<pre><code>git clone https://github.com/marrow/marrow.templating.git
 (cd marrow.mailer; python setup.py develop)</code></pre>
 
 You can upgrade to the latest version at any time:
 
-<pre><code>(cd marrow.render; git pull; python setup.py develop)</code></pre>
+<pre><code>(cd marrow.templating; git pull; python setup.py develop)</code></pre>
 
 If you would like to make changes and contribute them back to the project, fork the GitHub project, make your changes, and submit a pull request.  This process is beyond the scope of this documentation; for more information, see "GitHub's documentation":github-help.
 

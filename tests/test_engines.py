@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from marrow.render.core import Engines
+from marrow.templating.core import Engines
 
 
 class TestEnginesDictCommonUsage(TestCase):

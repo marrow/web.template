@@ -4,7 +4,7 @@ import sys
 
 from unittest import TestCase
 
-from marrow.render.serialize import bencode
+from marrow.templating.serialize import bencode
 
 
 

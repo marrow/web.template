@@ -5,8 +5,8 @@ from __future__ import unicode_literals
 from os import path, stat
 from threading import RLock
 
-from marrow.render.core import Engine
-from marrow.render.resolver import Resolver
+from marrow.templating.core import Engine
+from marrow.templating.resolver import Resolver
 
 try:
     import kajiki

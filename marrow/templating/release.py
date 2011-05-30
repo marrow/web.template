@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-"""Release information about a la carte."""
+"""Release information about marrow.templating."""
 
 from collections import namedtuple
 

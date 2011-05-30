@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals
 
-from marrow.render.core import Engine
+from marrow.templating.core import Engine
 
 
 __all__ = ['SprintfEngine']

@@ -5,7 +5,7 @@ warnings.warn(
         DeprecationWarning
     )
 
-import alacarte.resolver
-from alacarte.resolver import *
+import marrow.templating.resolver
+from marrow.templating.resolver import *
 
-__all__ = alacarte.resolver.__all__
+__all__ = marrow.templating.resolver.__all__

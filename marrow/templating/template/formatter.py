@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 from string import Formatter
 
-from marrow.render.core import Engine
+from marrow.templating.core import Engine
 
 
 __all__ = ['FormatterEngine']

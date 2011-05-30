@@ -3,11 +3,11 @@
 import warnings
 warnings.warn(
         'Access to the common template interface via the "alacarte" package has been deprecated.\n'
-        'Update your imports to reference "marrow.render" instead.',
+        'Update your imports to reference "marrow.templating" instead.',
         DeprecationWarning
     )
 
-import marrow.render.engines
-from marrow.render.engines import *
+import marrow.templating.engines
+from marrow.templating.engines import *
 
-__all__ = marrow.render.engines.__all__
+__all__ = marrow.templating.engines.__all__

@@ -5,7 +5,7 @@ from __future__ import with_statement
 import os
 from unittest import TestCase
 
-from marrow.render.core import Engine
+from marrow.templating.core import Engine
 
 
 class MyEngine(Engine):
