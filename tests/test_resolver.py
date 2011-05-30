@@ -15,7 +15,7 @@ class TestResolver(TestCase):
         
         self.assertEqual(engine, None)
         self.assertEqual(path[0], '/')
-        self.assertEqual(path.rsplit('/', 2)[-2:], ['marrow', 'render', 'core.py'])
+        self.assertEqual(path.rsplit('/', 2)[-2:], ['render', 'core.py'])
     
     def test_deep_file_cache(self):
         result1 = self.resolve('marrow/render/core.py')
