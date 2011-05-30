@@ -4,7 +4,7 @@ import sys
 
 from unittest import TestCase
 
-from alacarte.serialize import bencode
+from marrow.render.serialize import bencode
 
 
 

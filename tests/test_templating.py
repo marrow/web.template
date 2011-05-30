@@ -4,8 +4,8 @@ import sys
 
 from unittest import TestCase
 
-from alacarte.core import Engines
-from alacarte.resolver import Resolver
+from marrow.render.core import Engines
+from marrow.render.resolver import Resolver
 
 
 

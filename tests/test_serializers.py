@@ -5,7 +5,7 @@ import sys
 from functools import partial
 from unittest import TestCase
 
-from alacarte.core import Engines
+from marrow.render.core import Engines
 
 
 def serializer(engine, expected, *args, **kw):
@@ -43,8 +43,8 @@ def test_builtin_serializers():
 #         json_ = sys.modules['json']
 #         sys.modules['json'] = None
 #         
-#         if 'alacarte.serialize.json_' in sys.modules:
-#             del sys.modules['alacarte.serialize.json_']
+#         if 'marrow.render.serialize.json_' in sys.modules:
+#             del sys.modules['marrow.render.serialize.json_']
 #         
 #         self.assertEqual(self.render.json("foo"), ('application/json', '"foo"'))
 #         

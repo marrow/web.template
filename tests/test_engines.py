@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from alacarte.core import Engines
+from marrow.render.core import Engines
 
 
 class TestEnginesDictCommonUsage(TestCase):

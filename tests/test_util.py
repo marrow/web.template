@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from alacarte.util import Cache
+from marrow.render.util import Cache
 
 
 class TestCommonUsage(TestCase):
