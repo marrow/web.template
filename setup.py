@@ -16,7 +16,7 @@ setup(
         version = version,
         
         description = "A common templating and serialization interface for Python applications.",
-        long_description = ,
+        long_description = "",
         author = "Alice Bevan-McGregor and contributors",
         author_email = "alice+marrow@gothcandy.com",
         url = "http://www.marrowproject.com/render",
