@@ -91,7 +91,7 @@ class Engines(dict):
         
         if entries:
             warnings.warn(
-                    'The %s package has delcared "web.templating" or "alacarte" entry points.\n'
+                    'The %s package has declared "web.templating" or "alacarte" entry points.\n'
                     'The these entry_point namespaces have been deprecated in favor of "marrow.templating".' % dist.egg_name(),
                     DeprecationWarning
                 )
