@@ -1,14 +1,17 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import sys, os
+import os
+import sys
 
 from setuptools import setup, find_packages
 
-if sys.version_info < (2, 5):
-    raise SystemExit("Python 2.5 or later is required as 2.4 support requires too much cruft. -- BDFL")
 
-execfile(os.path.join("marrow", "templating", "release.py"))
+if sys.version_info < (2, 6):
+    raise SystemExit("Python 2.6 or later is required.")
+
+exec(open(os.path.join("marrow", "templating", "release.py")))
+
 
 
 setup(
@@ -16,15 +19,16 @@ setup(
         version = version,
         
         description = "A common templating and serialization interface for Python applications.",
-        long_description = "",
-        author = "Alice Bevan-McGregor and contributors",
-        author_email = "alice+marrow@gothcandy.com",
-        url = "http://www.marrowproject.com/templating",
-        download_url = "http://cheeseshop.python.org/pypi/marrow.templating/",
-        license = "MIT",
-        keywords = '',
+        long_description = """\
+For full documentation, see the README.textile file present in the package,
+or view it online on the GitHub project page:
+
+https://github.com/marrow/marrow.templating""",
         
-        install_requires = [],
+        author = "Alice Bevan-McGregor",
+        author_email = "alice+marrow@gothcandy.com",
+        url = "https://github.com/marrow/marrow.templating",
+        license = "MIT",
         
         test_suite = 'nose.collector',
         tests_require = [
@@ -45,21 +49,15 @@ setup(
                 "Topic :: Software Development :: Libraries :: Python Modules"
             ],
         
-        packages = find_packages(exclude=['examples', 'tests', 'tests.*', 'docs']),
+        packages = find_packages(exclude=['examples', 'tests']),
         include_package_data = True,
+        package_data = {'': ['README.textile', 'LICENSE']},
         zip_safe = True,
         
         namespace_packages = [
-                'marrow',
-                'marrow.templating',
-                'marrow.templating.serialize',
-                'marrow.templating.template',
-                'alacarte',
-                'alacarte.serialize',
-                'alacarte.template',
-                'cti',
-                'cti.serializers',
-                'cti.templating'
+                'marrow', 'marrow.templating', 'marrow.templating.serialize', 'marrow.templating.template',
+                'alacarte', 'alacarte.serialize', 'alacarte.template',
+                'cti', 'cti.serializers', 'cti.templating'
             ],
         
         entry_points = {

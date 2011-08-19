@@ -12,4 +12,10 @@ version_info = namedtuple('version_info', ('major', 'minor', 'micro', 'releasele
 
 version = ".".join([str(i) for i in version_info[:3]]) + ((version_info.releaselevel[0] + str(version_info.serial)) if version_info.releaselevel != 'final' else '')
 
+
+
+
+
+
+
 copyright = "2009-2011, Alice Bevan-McGregor and contributors"
