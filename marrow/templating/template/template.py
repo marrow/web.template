@@ -9,7 +9,7 @@ from string import Template
 __all__ = ['render']
 
 
-def render(data, template=None, string=None, safe=True, content_type='text/plain'):
+def render(data, template=None, string=None, safe=True, content_type=b'text/plain'):
     """A basic string.Template string templating language.
     
     See:

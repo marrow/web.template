@@ -23,7 +23,7 @@ class Mako(Engine):
         return self.get_template(filename)
     
     def render(self, template, data, **options):
-        return options.get('content_type', 'text/html'), template.render_unicode(**data)
+        return options.get('content_type', b'text/html'), template.render_unicode(**data)
     
     def get_template(self, uri):
         filename = resolve(uri)[1]

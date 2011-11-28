@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-from __future__ import with_statement
-
 from os import stat
 
 from marrow.templating.util import Cache

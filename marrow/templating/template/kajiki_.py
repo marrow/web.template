@@ -21,7 +21,7 @@ resolve = Resolver()
 
 class Kajiki(Engine):
     extmap = dict(xml="xml", htm="html", html="html", xhtml="xml", html5="html5", txt="text", text="text", kajiki="xml")
-    mimetypes = dict(xml="text/xml", html="text/html", html5="text/html", text="text/plain")
+    mimetypes = dict(xml=b"text/xml", html=b"text/html", html5=b"text/html", text=b"text/plain")
 
     def prepare(self, filename, i18n=None, autoescape=False, **options):
         loader = FileLoader(None)

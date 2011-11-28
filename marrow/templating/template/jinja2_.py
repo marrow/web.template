@@ -49,7 +49,7 @@ class Jinja2(object):
     def __init__(self, **options):
         self.environment = Environment(loader=AbsolutePathLoader())
         
-    def __call__(self, data, template, content_type="text/html", **options):
+    def __call__(self, data, template, content_type=b"text/html", **options):
         template = self.environment.get_template(template)
         
         return content_type, template.render(data)
