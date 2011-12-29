@@ -100,5 +100,5 @@ class Engines(dict):
         
         if not entries: return
         
-        for name, engine in entries.iteritems():
+        for name, engine in entries.items():
             self[name] = engine

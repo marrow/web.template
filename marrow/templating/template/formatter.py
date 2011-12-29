@@ -47,4 +47,4 @@ class FormatterEngine(Engine):
                 template,
                 data if not isinstance(data, dict) else tuple(),
                 data if isinstance(data, dict) else dict()
-            )
+            ))
