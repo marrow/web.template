@@ -20,7 +20,7 @@ resolve = Resolver()
 
 class Mako(Engine):
     def prepare(self, filename, **options):
-        return self.get_template(filename, dict(options))
+        return self.get_template(filename, options)
     
     def render(self, template, data, **options):
         return options.get('content_type', b'text/html'), template.render_unicode(**data)
