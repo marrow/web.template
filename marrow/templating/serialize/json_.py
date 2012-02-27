@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 try:
     from simplejson import dumps
 
@@ -14,7 +16,7 @@ except ImportError: # pragma: no cover
 __all__ = ['render']
 
 
-def render(data, template=None, content_type='application/json', i18n=None, **kw):
+def render(data, template=None, content_type=b'application/json', i18n=None, **kw):
     """A basic JSON serializer templating language.
     
     Accepts the same extended arguments as the JSON dumps() function, see:
