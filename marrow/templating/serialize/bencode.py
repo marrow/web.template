@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals
-
 __all__ = ['render', 'CodecError', 'EncodeError', 'DecodeError', 'Encoding', 'ChunkedEncoder', 'Bencode', 'EnhancedBencode']
 
 
@@ -75,7 +73,7 @@ class ChunkedEncoder(Encoding):
             return getattr(self, 'encode_' + type(data).__name__)(data)
         
         except AttributeError:
-            raise EncodeError, "Unable to encode a chunk of type '%s'." % (type(data), )
+            raise EncodeError("Unable to encode a chunk of type '%s'." % (type(data), ))
 
 
 class Bencode(ChunkedEncoder):
@@ -89,11 +87,11 @@ class Bencode(ChunkedEncoder):
     def decode(self, data):
         length = len(data)
         
-        if length == 0: raise DecodeError, "Can not decode an empty string."
+        if length == 0: raise DecodeError("Can not decode an empty string.")
         
         data, processed = self._decode(data)
         
-        if processed != length: raise DecodeError, "Did not fully decode input. %d of %d processed, %d bytes remaining." % (processed, length, length - processed)
+        if processed != length: raise DecodeError("Did not fully decode input. %d of %d processed, %d bytes remaining." % (processed, length, length - processed))
         
         return data
     
@@ -106,7 +104,7 @@ class Bencode(ChunkedEncoder):
         if signature.isdigit():
             return self.decode_str(data, offset)
         
-        raise DecodeError, "Unable to decode unknown signature '%s'." % (signature, )
+        raise DecodeError("Unable to decode unknown signature '%s'." % (signature, ))
     
     def encode_int(self, data):
         return 'i%de' % (data, )

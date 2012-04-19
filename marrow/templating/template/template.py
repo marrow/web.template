@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 from __future__ import unicode_literals
-from __future__ import with_statement
 
 from string import Template
 
@@ -9,7 +8,7 @@ from string import Template
 __all__ = ['render']
 
 
-def render(data, template=None, string=None, safe=True, content_type='text/plain'):
+def render(data, template=None, string=None, safe=True, content_type=b'text/plain'):
     """A basic string.Template string templating language.
     
     See:

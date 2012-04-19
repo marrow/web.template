@@ -45,7 +45,7 @@ class Genshi(Engine):
     def render(self, template, data, kind='markup', **options):
         # Method can be one of xml, xhtml, html, or text.
         method = options.get('method', 'text' if kind == 'text' else 'xhtml')
-        content_type = options.get('content_type', 'text/plain' if kind == 'text' else 'text/html')
+        content_type = options.get('content_type', b'text/plain' if kind == 'text' else b'text/html')
         kind = TextTemplate if kind == 'text' else MarkupTemplate
         
         data.update({'ET': ET, 'HTML': HTML, 'XML': XML})

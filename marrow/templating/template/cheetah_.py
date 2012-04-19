@@ -29,4 +29,4 @@ class Cheetah(Engine):
         template.searchList()[0:-1] = []
         lock.release()
         
-        return options.get('content_type', self.mimetype), result
+        return options.get('content_type', b'text/html'), result

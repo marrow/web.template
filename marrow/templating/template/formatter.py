@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 from __future__ import unicode_literals
-from __future__ import unicode_literals
 
 from string import Formatter
 
@@ -40,15 +39,10 @@ class FormatterEngine(Engine):
     
     """
     
-    mapping = {
-            'formatter': 'text/plain',
-            None: 'text/plain'
-        }
-    
     def render(self, template, data, **options):
         """Implemented by a sub-class, this returns the 2-tuple of mimetype and unicode content."""
         
-        return self.mapping[None], renderer.vformat(
+        return options.get('content_type', b'text/plain'), renderer.vformat(
                 template,
                 data if not isinstance(data, dict) else tuple(),
                 data if isinstance(data, dict) else dict()

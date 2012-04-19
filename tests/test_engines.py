@@ -50,13 +50,13 @@ class TestEnginesDictCommonUsage(TestCase):
     def test_render(self):
         render = Engines()
         
-        self.assertEqual(render('sprintf:./tests/templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
+        self.assertEqual(render('sprintf:./templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
     
     def test_render_no_engine(self):
         render = Engines()
         
         try:
-            self.assertEqual(render('./tests/templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
+            self.assertEqual(render('./templates/hello-sprintf.txt', dict(name='world')), ('text/plain', "Hello world!"))
         
         except ValueError:
             pass

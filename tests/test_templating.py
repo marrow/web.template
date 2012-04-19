@@ -18,7 +18,7 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_formatter_file(self):
-        self.assertEqual(self.render.formatter(dict(name="world"), './tests/templates/hello-formatter.txt'),
+        self.assertEqual(self.render.formatter(dict(name="world"), './templates/hello-formatter.txt'),
                 ('text/plain', 'Hello world!'))
     
     def test_sprintf_string(self):
@@ -26,7 +26,7 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_sprintf_file(self):
-        self.assertEqual(self.render.sprintf(dict(name="world"), './tests/templates/hello-sprintf.txt'),
+        self.assertEqual(self.render.sprintf(dict(name="world"), './templates/hello-sprintf.txt'),
                 ('text/plain', 'Hello world!'))
     
     def test_template_string(self):
@@ -38,14 +38,26 @@ class TestTemplating(TestCase):
                 ('text/plain', 'Hello world!'))
     
     def test_template_file(self):
-        self.assertEqual(self.render.template(dict(name="world"), './tests/templates/hello-template.txt'),
+        self.assertEqual(self.render.template(dict(name="world"), './templates/hello-template.txt'),
                 ('text/plain', 'Hello world!'))
 
 
-# class TestEngines(TestCase):
-#     def setUp(self):
-#         self.render = Engines()
-#     
+class TestEngines(TestCase):
+    def setUp(self):
+        self.render = Engines()
+
+    def test_kajiki_xml(self):
+        rendered = self.render.kajiki(dict(name="world"), 'templates/hello-kajiki.xml')
+        self.assertEqual(rendered, (u'text/xml', u'<html><body><h1>Hello world!</h1></body></html>'))
+ 
+    def test_kajiki_text(self):
+        rendered = self.render.kajiki(dict(name="world"), 'templates/hello-kajiki.txt')
+        self.assertEqual(rendered, (u'text/plain', u'Hello world!'))
+
+    def test_kajiki_include(self):
+        rendered = self.render.kajiki(dict(name="world"), 'templates/hello-kajiki-include.xml')
+        self.assertEqual(rendered, (u'text/xml', u'<html><body><h1>Hello world!</h1></body></html>'))
+     
 #     def test_mako(self):
 #         self.assertEqual(self.render.mako(dict(name="world"), './tests/templates/hello-mako.txt', content_type='text/plain'),
 #                 ('text/plain', u'Hello world!'))

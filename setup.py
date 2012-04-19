@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 if sys.version_info < (2, 6):
     raise SystemExit("Python 2.6 or later is required.")
 
-exec(open(os.path.join("marrow", "templating", "release.py")))
+exec(open(os.path.join("marrow", "templating", "release.py")).read())
 
 
 
@@ -34,9 +34,10 @@ https://github.com/marrow/marrow.templating""",
         tests_require = [
                 'nose',
                 'coverage',
+                'PyYAML',
                 'Genshi',
                 'Mako',
-                'PyYAML'
+                'Kajiki'
             ],
         
         classifiers = [
@@ -77,6 +78,7 @@ https://github.com/marrow/marrow.templating""",
                         'jinja2 = marrow.templating.template.jinja2_:Jinja2',
                         'mako = marrow.templating.template.mako_:Mako',
                         'cheetah = marrow.templating.template.cheetah_:Cheetah',
+                        'kajiki = marrow.templating.template.kajiki_:Kajiki',
                     ]
             }
     )

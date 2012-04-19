@@ -28,4 +28,4 @@ class SprintfEngine(Engine):
     """
     
     def render(self, template, data, **options):
-        return options.get('content_type', 'text/plain'), template % data
+        return options.get('content_type', b'text/plain'), template % data
