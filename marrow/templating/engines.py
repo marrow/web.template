@@ -89,7 +89,7 @@ class Engines(dict):
         entries = dist.get_entry_map('web.templating')
         entries.update(dist.get_entry_map('alacarte'))
         
-        if entries:
+        if entries:  # pragma: no cover
             warnings.warn(
                     'The %s package has declared "web.templating" or "alacarte" entry points.\n'
                     'The these entry_point namespaces have been deprecated in favor of "marrow.templating".' % dist.egg_name(),
