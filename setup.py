@@ -37,7 +37,8 @@ https://github.com/marrow/marrow.templating""",
                 'PyYAML',
                 'Genshi',
                 'Mako',
-                'Kajiki'
+                'Kajiki',
+                'Cheetah'
             ],
         
         classifiers = [

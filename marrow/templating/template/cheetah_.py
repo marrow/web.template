@@ -8,8 +8,7 @@ from marrow.templating.core import Engine
 
 try:
     from Cheetah.Template import Template
-
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError('You must install the cheetah package.')
 
 

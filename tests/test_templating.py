@@ -57,11 +57,15 @@ class TestEngines(TestCase):
     def test_kajiki_include(self):
         rendered = self.render.kajiki(dict(name="world"), 'templates/hello-kajiki-include.xml')
         self.assertEqual(rendered, (u'text/xml', u'<html><body><h1>Hello world!</h1></body></html>'))
-     
-#     def test_mako(self):
-#         self.assertEqual(self.render.mako(dict(name="world"), './tests/templates/hello-mako.txt', content_type='text/plain'),
-#                 ('text/plain', u'Hello world!'))
-#     
-#     def test_cheetah(self):
-#         self.assertEqual(self.render.cheetah(dict(name="world"), './tests/templates/hello-cheetah.tmpl', content_type='text/plain'),
-#                 ('text/plain', u'Hello world!\n'))
+
+    def test_mako(self):
+        self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako.txt', content_type='text/plain'),
+                ('text/plain', u'Hello world!'))
+
+    def test_mako_include(self):
+        self.assertEqual(self.render.mako(dict(name="world"), './templates/hello-mako-include.txt', content_type='text/plain'),
+                ('text/plain', u'Hello world!'))
+
+    def test_cheetah(self):
+        self.assertEqual(self.render.cheetah(dict(name="world"), './templates/hello-cheetah.tmpl', content_type='text/plain'),
+                ('text/plain', u'Hello world!\n'))
