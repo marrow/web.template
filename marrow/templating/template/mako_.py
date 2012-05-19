@@ -8,7 +8,7 @@ from marrow.templating.resolver import Resolver
 try:
     from mako.template import Template
 
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError('You must install the mako package.')
 
 
@@ -20,12 +20,12 @@ resolve = Resolver()
 
 class Mako(Engine):
     def prepare(self, filename, **options):
-        return self.get_template(filename, options)
+        return self.get_template(filename, **options)
     
     def render(self, template, data, **options):
         return options.get('content_type', b'text/html'), template.render_unicode(**data)
     
-    def get_template(self, uri, options):
+    def get_template(self, uri, **options):
         filename = resolve(uri)[1]
         options.pop('content_type', None)
         return Template(filename=filename, lookup=self, **options)
