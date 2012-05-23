@@ -4,7 +4,7 @@ import os
 
 from pkg_resources import resource_listdir, resource_filename
 
-from alacarte.util import Cache
+from marrow.templating.util import Cache
 
 
 __all__ = ['Resolver']

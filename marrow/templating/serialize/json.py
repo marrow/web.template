@@ -25,14 +25,14 @@ def render(data, template=None, content_type=b'application/json', i18n=None, **k
     
     Sample usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render.json(dict(hello="world"))
         ('application/json', '{"hello": "world"}')
     
     More compact notation:
         
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render.json(dict(hello="world"), separators=(',', ':'))
         ('application/json', '{"hello":"world"}')

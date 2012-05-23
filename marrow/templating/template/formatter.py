@@ -25,14 +25,14 @@ class FormatterEngine(Engine):
     
     Simple (string-based) usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render('formatter:', dict(name="world"), string="Hello {name}!")
         ('text/plain', 'Hello world!')
     
     File-based usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render('formatter:./tests/templates/hello3.txt', dict(name="world"))
         ('text/plain', 'Hello world!')

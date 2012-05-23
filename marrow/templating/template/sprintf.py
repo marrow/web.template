@@ -13,14 +13,14 @@ class SprintfEngine(Engine):
     
     Simple (string-based) usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render('sprintf:', dict(hello="world"), string="Hello %(hello)s!")
         ('text/plain', 'Hello world!')
     
     File-based usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render('sprintf:./tests/templates/hello.txt', dict(hello="world"))
         ('text/plain', 'Hello world!')

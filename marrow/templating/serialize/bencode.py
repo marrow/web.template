@@ -16,7 +16,7 @@ def render(data, template=None, kind='enhanced', i18n=None, **kw):
     
     Sample usage:
     
-        >>> from alacarte.core import Engines
+        >>> from marrow.templating.core import Engines
         >>> render = Engines()
         >>> render.bencode(dict(hello="world"))
         ('application/x-bencode', 'd5:hello5:worlde')
