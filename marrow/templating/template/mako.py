@@ -1,13 +1,12 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 from marrow.templating.core import Engine
 from marrow.templating.resolver import Resolver
 
 try:
     from mako.template import Template
-
 except ImportError:  # pragma: no cover
     raise ImportError('You must install the mako package.')
 

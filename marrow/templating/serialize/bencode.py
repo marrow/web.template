@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals, absolute_import
+
 __all__ = ['render', 'CodecError', 'EncodeError', 'DecodeError', 'Encoding', 'ChunkedEncoder', 'Bencode', 'EnhancedBencode']
 
 

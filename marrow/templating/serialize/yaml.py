@@ -1,9 +1,10 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals, absolute_import
+
 try:
     import yaml
-
-except ImportError: # pragma: no cover
+except ImportError:  # pragma: no cover
     raise ImportError('You must install the yaml package before you can serialize data this way.')
 
 

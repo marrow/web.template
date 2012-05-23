@@ -64,22 +64,22 @@ https://github.com/marrow/marrow.templating""",
         
         entry_points = {
                 'marrow.templating': [
-                        'json = marrow.templating.serialize.json_:render',
+                        'json = marrow.templating.serialize.json:render',
                         'bencode = marrow.templating.serialize.bencode:render',
-                        'yaml = marrow.templating.serialize.yaml_:render',
-                        'pickle = marrow.templating.serialize.pickle_:render_pickle',
-                        'cpickle = marrow.templating.serialize.pickle_:render_cpickle',
-                        'marshal = marrow.templating.serialize.marshal_:render',
+                        'yaml = marrow.templating.serialize.yaml:render',
+                        'pickle = marrow.templating.serialize.pickle:render_pickle',
+                        'cpickle = marrow.templating.serialize.pickle:render_cpickle',
+                        'marshal = marrow.templating.serialize.marshal:render',
                         
                         'sprintf = marrow.templating.template.sprintf:SprintfEngine',
                         'formatter = marrow.templating.template.formatter:FormatterEngine',
                         'template = marrow.templating.template.template:render',
                         
-                        'genshi = marrow.templating.template.genshi_:Genshi',
-                        'jinja2 = marrow.templating.template.jinja2_:Jinja2',
-                        'mako = marrow.templating.template.mako_:Mako',
-                        'cheetah = marrow.templating.template.cheetah_:Cheetah',
-                        'kajiki = marrow.templating.template.kajiki_:Kajiki',
+                        'genshi = marrow.templating.template.genshi:Genshi',
+                        'jinja2 = marrow.templating.template.jinja2:Jinja2',
+                        'mako = marrow.templating.template.mako:Mako',
+                        'cheetah = marrow.templating.template.cheetah:Cheetah',
+                        'kajiki = marrow.templating.template.kajiki:Kajiki',
                     ]
             }
     )

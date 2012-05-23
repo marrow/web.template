@@ -1,15 +1,13 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 try:
     from simplejson import dumps
-
-except ImportError: # pragma: no cover
+except ImportError:  # pragma: no cover
     try:
         from json import dumps
-    
-    except ImportError: # pragma: no cover
+    except ImportError:  # pragma: no cover
         raise ImportError('Your version of Python requires that you install the simplejson package for JSON support.')
 
 

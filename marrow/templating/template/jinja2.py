@@ -1,12 +1,11 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 from os import path
 
 try:
     from jinja2 import Environment, BaseLoader, TemplateNotFound
-
 except ImportError:
     raise ImportError("You must install the jinja2 package.")
 

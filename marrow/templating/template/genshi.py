@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, absolute_import
 
 from os import path
 
@@ -10,7 +10,6 @@ try:
     from genshi.input import ET, HTML, XML
     from genshi.filters import Translator
     from genshi.template import TemplateLoader, TextTemplate, MarkupTemplate
-
 except ImportError:
     raise ImportError('You must install the genshi package.')
 
