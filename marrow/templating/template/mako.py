@@ -26,6 +26,7 @@ class Mako(Engine):
     
     def get_template(self, uri, **options):
         filename = resolve(uri)[1]
+        options.pop('i18n', None)  # Mako is satisfied with getting translation functions passed in.
         options.pop('content_type', None)
         return Template(filename=filename, lookup=self, **options)
     
