@@ -17,4 +17,4 @@ def render(data, template=None, i18n=None, **kw):
     
     """
     
-    return 'application/octet-stream', marshal.dumps(data, **kw)
+    return b'application/octet-stream', marshal.dumps(data, **kw)

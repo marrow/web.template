@@ -59,7 +59,7 @@ class Resolver(Cache):
         possibilities = set([i.rstrip('~') for i in resource_listdir('.'.join(parts), '/'.join(path[:-1])) if i.startswith(path[-1] + '.')])
         
         if len(possibilities) == 1:
-            path[-1] = possibilities[0]
+            path[-1] = list(possibilities)[0]
         
         elif len(possibilities) > 1:
             if path[-1] not in possibilities:

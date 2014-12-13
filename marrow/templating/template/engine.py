@@ -65,7 +65,7 @@ class Engine(object):
         with open(filename) as f:
             content = f.read()
             
-            if not isinstance(content, unicode):
+            if hasattr(content, 'decode'):
                 content = content.decode(options.get('encoding', 'utf8')) if isinstance(content, str) else content
         
         return content

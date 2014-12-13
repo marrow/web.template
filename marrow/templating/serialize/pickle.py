@@ -1,33 +1,38 @@
 # encoding: utf-8
 
-from __future__ import unicode_literals, absolute_import
+from __future__ import unicode_literals
 
-import pickle
-import cPickle
+from warnings import warn
+
+try:
+	from cPickle import dumps
+except ImportError:
+	from pickle import dumps
 
 
 __all__ = ['render_pickle', 'render_cpickle']
 
 
 def render_pickle(data, template=None, i18n=None, **kw):
-    """Serialize data using the Python pickle standard library.
-    
-    Accepts the same extended arguments as the pickle.dumps() function, see:
-    
-        http://www.python.org/doc/2.6/library/pickle.html#pickle.dumps
-    
-    """
-    
-    return 'application/octet-stream', pickle.dumps(data, **kw)
+	"""Serialize data using the Python pickle standard library.
+	
+	Accepts the same extended arguments as the pickle.dumps() function, see:
+	
+		https://docs.python.org/3/library/pickle.html
+	
+	"""
+	
+	return b'application/octet-stream', dumps(data, **kw)
 
 
 def render_cpickle(data, template=None, i18n=None, **kw):
-    """Serialize data using the Python cPickle standard library.
-    
-    Accepts the same extended arguments as the pickle.dumps() function, see:
-    
-        http://www.python.org/doc/2.6/library/pickle.html#pickle.dumps
-    
-    """
-    
-    return 'application/octet-stream', cPickle.dumps(data, **kw)
+	"""Serialize data using the Python pickle standard library.
+	
+	Accepts the same extended arguments as the pickle.dumps() function, see:
+	
+		https://docs.python.org/3/library/pickle.html
+	
+	"""
+	warn("Use is deprecated: will always use cPickle if present.", DeprecationWarning)
+	
+	return b'application/octet-stream', dumps(data, **kw)

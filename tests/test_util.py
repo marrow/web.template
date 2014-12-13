@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+from __future__ import unicode_literals
+
 from unittest import TestCase
 
 from marrow.templating.util import Cache
@@ -14,45 +16,45 @@ class TestCommonUsage(TestCase):
         self.cache['C'] = 2
     
     def test_basic(self):
-        self.assertEqual(repr(self.cache), "{'A': 0, 'C': 2, 'B': 1}")
-        self.assertEqual(len(self.cache), 3)
-        self.assertEqual(self.cache['A'], 0)
+        assert __import__('pprint').pformat(self.cache) == "{'A': 0, 'B': 1, 'C': 2}"
+        assert len(self.cache) == 3
+        assert self.cache['A'] == 0
     
     def test_overflow(self):
         self.cache['D'] = 3
         
-        self.assertEqual(len(self.cache), 3)
-        self.assertFalse('A' in self.cache)
+        assert len(self.cache) == 3
+        assert 'A' not in self.cache
         
     def test_sort(self):
         self.cache['E'] = 4
         self.cache['B']
         
-        self.assertEqual([i for i in self.cache], ['B', 'E', 'C'])
+        assert [i for i in self.cache] == ['B', 'E', 'C']
     
     def test_reassignment(self):
         self.cache['A'] = 5
-        self.assertEqual(self.cache['A'], 5)
-        self.assertEqual([i for i in self.cache], ['A', 'C', 'B'])
+        assert self.cache['A'] == 5
+        assert [i for i in self.cache] == ['A', 'C', 'B']
         
         self.cache['C'] = 6
-        self.assertEqual(self.cache['C'], 6)
-        self.assertEqual([i for i in self.cache], ['C', 'A', 'B'])
+        assert self.cache['C'] == 6
+        assert [i for i in self.cache] == ['C', 'A', 'B']
 
     def test_capacity(self):
         self.cache.capacity = 1
         self.cache._restrict()
         
-        self.assertEqual(len(self.cache), 1)
-        self.assertFalse('A' in self.cache)
-        self.assertTrue('C' in self.cache)
+        assert len(self.cache) == 1
+        assert 'A' not in self.cache
+        assert 'C' in self.cache
         
         self.cache['A'] = 0
-        self.assertEqual(len(self.cache), 1)
-        self.assertTrue('A' in self.cache)
-        self.assertFalse('C' in self.cache)
+        assert len(self.cache) == 1
+        assert 'A' in self.cache
+        assert 'C' not in self.cache
         
         self.cache.capacity = 0
         self.cache._restrict()
         
-        self.assertEqual(len(self.cache), 0)
+        assert len(self.cache) == 0

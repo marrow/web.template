@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from __future__ import with_statement
+from __future__ import unicode_literals
 
 import os
 from unittest import TestCase
@@ -16,7 +16,7 @@ class MyEngine(Engine):
     def render(self, template, data, **options):
         assert 'bar' in options, repr(options)
         assert template == ('foo', 'bar'), repr(template)
-        return 'text/plain', (template, data, options)
+        return b'text/plain', (template, data, options)
 
 
 class SprintfEngine(Engine):
@@ -32,7 +32,7 @@ class SprintfEngine(Engine):
     
     def render(self, template, data, **options):
         val, f = template
-        return 'text/plain', (val, (f % data))
+        return b'text/plain', (val, (f % data))
 
 
 class TestEngineBaseClass(TestCase):
@@ -41,28 +41,28 @@ class TestEngineBaseClass(TestCase):
         
         mime, result = engine(['baz', 'diz'], bar=False)
         
-        self.assertEqual(mime, 'text/plain')
+        self.assertEqual(mime, b'text/plain')
         self.assertEqual(result, (('foo', 'bar'), ['baz', 'diz'], {'foo': True, 'bar': False}))
     
     def test_sprintf_engine(self):
         engine = SprintfEngine()
         
         # Test template loading and execution.
-        mime, result = engine(dict(name="world"), 'templates/hello-sprintf.txt')
-        self.assertEqual(mime, 'text/plain')
+        mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+        self.assertEqual(mime, b'text/plain')
         self.assertEqual(result, (1, "Hello world!"))
         
         # Test template caching.
-        mime, result = engine(dict(name="world"), 'templates/hello-sprintf.txt')
-        self.assertEqual(mime, 'text/plain')
+        mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+        self.assertEqual(mime, b'text/plain')
         self.assertEqual(result, (1, "Hello world!"))
         
         # Update the modification time.
-        os.utime('templates/hello-sprintf.txt', None)
+        os.utime('tests/templates/hello-sprintf.txt', None)
         
         # Test cache invalidation.
-        mime, result = engine(dict(name="world"), 'templates/hello-sprintf.txt')
-        self.assertEqual(mime, 'text/plain')
+        mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+        self.assertEqual(mime, b'text/plain')
         self.assertEqual(result, (2, "Hello world!"))
     
     def test_interface(self):

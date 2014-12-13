@@ -1,1 +1,1 @@
-<py:extends href="./templates/hello-kajiki.txt"><py:block name="body"><html><body><h1>${parent_block()}</h1></body></html></py:block></py:extends>
+<py:extends href="./tests/templates/hello-kajiki.txt"><py:block name="body"><html><body><h1>${parent_block()}</h1></body></html></py:block></py:extends>

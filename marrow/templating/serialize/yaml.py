@@ -20,4 +20,4 @@ def render(data, template=None, i18n=None, **kw):
     
     """
     
-    return 'application/x-yaml', yaml.dump(data, **kw)
+    return b'application/x-yaml', yaml.dump(data, **kw)
