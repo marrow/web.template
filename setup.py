@@ -53,7 +53,7 @@ https://github.com/marrow/marrow.templating""",
 				'Mako',
 				'Kajiki',
 				'Tenjin',
-			] + (['Cheetah'] if sys.version_info < (3, 0) else []),
+			],
 		
 		classifiers = [
 				"Development Status :: 5 - Production/Stable",
