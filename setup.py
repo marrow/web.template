@@ -48,11 +48,6 @@ https://github.com/marrow/marrow.templating""",
 				'pytest-flakes',
 				'pytest-cagoule',
 				'pytest-spec<=0.2.22',
-				'PyYAML',
-				'Genshi',
-				'Mako',
-				'Kajiki',
-				'Tenjin',
 			],
 		
 		classifiers = [
