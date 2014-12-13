@@ -56,7 +56,7 @@ class Resolver(Cache):
         
         path = path.split('/')
         
-        possibilities = [i for i in resource_listdir('.'.join(parts), '/'.join(path[:-1])) if i.startswith(path[-1] + '.')]
+        possibilities = set([i.rstrip('~') for i in resource_listdir('.'.join(parts), '/'.join(path[:-1])) if i.startswith(path[-1] + '.')])
         
         if len(possibilities) == 1:
             path[-1] = possibilities[0]
