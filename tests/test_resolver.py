@@ -26,7 +26,7 @@ class TestResolver(TestCase):
         assert result1 is result2
     
     def test_unambiguous_object_reference(self):
-        engine, path = self.resolve('templates.hello-template')
+        engine, path = self.resolve('tests.templates.hello-template')
         
         assert path.split('/')[-3:] == ['tests', 'templates', 'hello-template.txt']
     
