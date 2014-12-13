@@ -52,7 +52,7 @@ https://github.com/marrow/marrow.templating""",
 				'Genshi',
 				'Mako',
 				'Kajiki',
-				'pyTenjin',
+				'Tenjin',
 			] + (['Cheetah'] if sys.version_info < (3, 0) else []),
 		
 		classifiers = [

@@ -7,6 +7,3 @@ git config --global user.name "Travis: Marrow"
 
 pip install --upgrade setuptools pytest
 pip install tox
-pip install python-coveralls
-pip install pytest-cov
-pip install pytest-flakes
