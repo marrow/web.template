@@ -15,30 +15,29 @@ class TestResolver(TestCase):
     def test_deep_file(self):
         engine, path = self.resolve('marrow.templating/core.py')
         
-        self.assertEqual(engine, None)
-        self.assertEqual(path[0], '/')
-        self.assertEqual(path.rsplit('/', 2)[-2:], ['templating', 'core.py'])
+        assert engine is None
+        assert path[0] == '/'
+        assert path.rsplit('/', 2)[-2:] == ['templating', 'core.py']
     
     def test_deep_file_cache(self):
         result1 = self.resolve('marrow.templating/core.py')
         result2 = self.resolve('marrow.templating/core.py')
         
-        self.assertTrue(result1 is result2)
+        assert result1 is result2
     
     def test_unambiguous_object_reference(self):
         engine, path = self.resolve('templates.hello-template')
         
-        self.assertEqual(path.split('/')[-3:], ['tests', 'templates', 'hello-template.txt'])
+        assert path.split('/')[-3:] == ['tests', 'templates', 'hello-template.txt']
     
     def test_ambiguous_error(self):
         try:
-            self.resolve('genshi:marrow.templating.resolver')
+            result = self.resolve('genshi:tests.templates.duplicate')
         
         except ValueError:
-            pass
+            return
         
-        else:
-            self.fail()
+        assert False and result, "Failed to raise a ValueError."
     
     def test_absolute_nix(self):
         engine, package, path = self.resolve.parse('/tmp/foo')

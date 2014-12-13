@@ -2,6 +2,7 @@
 
 from __future__ import unicode_literals
 
+from pprint import pformat
 from unittest import TestCase
 
 from marrow.templating.util import Cache
@@ -16,7 +17,7 @@ class TestCommonUsage(TestCase):
         self.cache['C'] = 2
     
     def test_basic(self):
-        assert __import__('pprint').pformat(self.cache) == "{'A': 0, 'B': 1, 'C': 2}"
+        assert pformat(self.cache) == pformat({'A': 0, 'B': 1, 'C': 2})
         assert len(self.cache) == 3
         assert self.cache['A'] == 0
     
