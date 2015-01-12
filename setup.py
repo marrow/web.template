@@ -69,8 +69,6 @@ https://github.com/marrow/marrow.templating""",
 			),
 		namespace_packages = [
 				'marrow', 'marrow.templating', 'marrow.templating.serialize', 'marrow.templating.template',
-				'alacarte', 'alacarte.serialize', 'alacarte.template',
-				'cti', 'cti.serializers', 'cti.templating'
 			],
 		
 		entry_points = {
@@ -89,7 +87,6 @@ https://github.com/marrow/marrow.templating""",
 						'genshi = marrow.templating.template.genshi:Genshi',
 						'jinja2 = marrow.templating.template.jinja2:Jinja2',
 						'mako = marrow.templating.template.mako:Mako',
-						'cheetah = marrow.templating.template.cheetah:Cheetah',
 						'kajiki = marrow.templating.template.kajiki:Kajiki',
 						'tenjin = marrow.templating.template.tenjin:Tenjin',
 						'pytenjin = marrow.templating.template.tenjin:Tenjin',
