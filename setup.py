@@ -69,8 +69,6 @@ https://github.com/marrow/marrow.templating""",
 			),
 		namespace_packages = [
 				'marrow', 'marrow.templating', 'marrow.templating.serialize', 'marrow.templating.template',
-				'alacarte', 'alacarte.serialize', 'alacarte.template',
-				'cti', 'cti.serializers', 'cti.templating'
 			],
 		
 		entry_points = {
