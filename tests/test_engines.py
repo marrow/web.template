@@ -50,7 +50,7 @@ class TestEnginesDictCommonUsage(TestCase):
 		self.assertRaises(ValueError, lambda: render('text/html:'))
 	
 	def test_render(self):
-		result = Engines()('sprintf:./tests/templates/hello-sprintf.txt', dict(name='world'))
+		result = Engines()('sprintf:./test/templates/hello-sprintf.txt', dict(name='world'))
 		
 		assert result == (b'text/plain', "Hello world!")
 	
@@ -58,7 +58,7 @@ class TestEnginesDictCommonUsage(TestCase):
 		render = Engines()
 		
 		try:
-			assert render('./tests/templates/hello-sprintf.txt', dict(name='world')) == (b'text/plain', "Hello world!")
+			assert render('./test/templates/hello-sprintf.txt', dict(name='world')) == (b'text/plain', "Hello world!")
 		
 		except ValueError:
 			pass

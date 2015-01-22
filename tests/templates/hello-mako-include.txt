@@ -1,1 +1,1 @@
-<%include file="./tests/templates/hello-mako.txt"/>
+<%include file="./test/templates/hello-mako.txt"/>

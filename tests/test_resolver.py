@@ -26,13 +26,13 @@ class TestResolver(TestCase):
 		assert result1 is result2
 	
 	def test_unambiguous_object_reference(self):
-		engine, path = self.resolve('tests.templates.hello-template')
+		engine, path = self.resolve('test.templates.hello-template')
 		
-		assert path.split('/')[-3:] == ['tests', 'templates', 'hello-template.txt']
+		assert path.split('/')[-3:] == ['test', 'templates', 'hello-template.txt']
 	
 	def test_ambiguous_error(self):
 		try:
-			result = self.resolve('genshi:tests.templates.duplicate')
+			result = self.resolve('genshi:test.templates.duplicate')
 		
 		except ValueError:
 			return

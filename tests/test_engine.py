@@ -48,20 +48,20 @@ class TestEngineBaseClass(TestCase):
 		engine = SprintfEngine()
 		
 		# Test template loading and execution.
-		mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+		mime, result = engine(dict(name="world"), 'test/templates/hello-sprintf.txt')
 		self.assertEqual(mime, b'text/plain')
 		self.assertEqual(result, (1, "Hello world!"))
 		
 		# Test template caching.
-		mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+		mime, result = engine(dict(name="world"), 'test/templates/hello-sprintf.txt')
 		self.assertEqual(mime, b'text/plain')
 		self.assertEqual(result, (1, "Hello world!"))
 		
 		# Update the modification time.
-		os.utime('tests/templates/hello-sprintf.txt', None)
+		os.utime('test/templates/hello-sprintf.txt', None)
 		
 		# Test cache invalidation.
-		mime, result = engine(dict(name="world"), 'tests/templates/hello-sprintf.txt')
+		mime, result = engine(dict(name="world"), 'test/templates/hello-sprintf.txt')
 		self.assertEqual(mime, b'text/plain')
 		self.assertEqual(result, (2, "Hello world!"))
 	
