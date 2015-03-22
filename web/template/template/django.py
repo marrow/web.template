@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 
 import os
 
-from marrow.templating.core import Engine
+from web.template.core import Engine
 
 try:
 	from django.template import Template

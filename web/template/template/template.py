@@ -17,14 +17,14 @@ def render(data, template=None, string=None, safe=True, content_type=b'text/plai
 	
 	Simple (string-based) usage:
 	
-		>>> from marrow.templating.core import Engines
+		>>> from web.template.core import Engines
 		>>> render = Engines()
 		>>> render('template:', dict(name="world"), string="Hello $name!")
 		('text/plain', 'Hello world!')
 	
 	File-based usage:
 	
-		>>> from marrow.templating.core import Engines
+		>>> from web.template.core import Engines
 		>>> render = Engines()
 		>>> render('template:./tests/templates/hello2.txt', dict(name="world"))
 		('text/plain', 'Hello world!')

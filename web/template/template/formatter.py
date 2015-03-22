@@ -4,7 +4,7 @@ from __future__ import unicode_literals, absolute_import
 
 from string import Formatter
 
-from marrow.templating.core import Engine
+from web.template.core import Engine
 
 
 __all__ = ['FormatterEngine']
@@ -25,14 +25,14 @@ class FormatterEngine(Engine):
     
     Simple (string-based) usage:
     
-        >>> from marrow.templating.core import Engines
+        >>> from web.template.core import Engines
         >>> render = Engines()
         >>> render('formatter:', dict(name="world"), string="Hello {name}!")
         ('text/plain', 'Hello world!')
     
     File-based usage:
     
-        >>> from marrow.templating.core import Engines
+        >>> from web.template.core import Engines
         >>> render = Engines()
         >>> render('formatter:./tests/templates/hello3.txt', dict(name="world"))
         ('text/plain', 'Hello world!')

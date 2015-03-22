@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from unittest import TestCase
 
-from marrow.templating.serialize import bencode
+from web.template.serialize import bencode
 
 
 

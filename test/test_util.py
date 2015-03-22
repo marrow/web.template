@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from pprint import pformat
 from unittest import TestCase
 
-from marrow.templating.util import Cache
+from web.template.util import Cache
 
 
 class TestCommonUsage(TestCase):

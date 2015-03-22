@@ -2,7 +2,7 @@
 
 from os import stat
 
-from marrow.templating.util import Cache
+from web.template.util import Cache
 
 
 __all__ = ['Engine']

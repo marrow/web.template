@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import os
 from unittest import TestCase
 
-from marrow.templating.core import Engine
+from web.template.core import Engine
 
 
 class MyEngine(Engine):

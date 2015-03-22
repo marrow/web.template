@@ -11,7 +11,7 @@ try:
 except ImportError:
 	from pickle import dumps
 
-from marrow.templating.core import Engines
+from web.template.core import Engines
 
 
 class TestSerializers(TestCase):

@@ -5,7 +5,7 @@ import warnings
 import inspect
 import collections
 
-from marrow.templating.resolver import Resolver
+from .resolver import Resolver
 
 
 __all__ = ['Engines']
@@ -86,17 +86,7 @@ class Engines(dict):
         del self[name]
     
     def _distributions(self, dist):
-        entries = dist.get_entry_map('web.templating')
-        entries.update(dist.get_entry_map('alacarte'))
-        
-        if entries:  # pragma: no cover
-            warnings.warn(
-                    'The %s package has declared "web.templating" or "alacarte" entry points.\n'
-                    'The these entry_point namespaces have been deprecated in favor of "marrow.templating".' % dist.egg_name(),
-                    DeprecationWarning
-                )
-        
-        entries.update(dist.get_entry_map('marrow.templating'))
+        entries = dist.get_entry_map('web.template')
         
         if not entries: return
         

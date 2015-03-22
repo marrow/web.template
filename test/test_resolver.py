@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import os
 from unittest import TestCase
 
-from marrow.templating.core import Resolver
+from web.template.core import Resolver
 
 
 class TestResolver(TestCase):
@@ -13,15 +13,15 @@ class TestResolver(TestCase):
 		self.resolve = Resolver()
 	
 	def test_deep_file(self):
-		engine, path = self.resolve('marrow.templating/core.py')
+		engine, path = self.resolve('web.template/core.py')
 		
 		assert engine is None
 		assert path[0] == '/'
-		assert path.rsplit('/', 2)[-2:] == ['templating', 'core.py']
+		assert path.rsplit('/', 2)[-2:] == ['template', 'core.py']
 	
 	def test_deep_file_cache(self):
-		result1 = self.resolve('marrow.templating/core.py')
-		result2 = self.resolve('marrow.templating/core.py')
+		result1 = self.resolve('web.template/core.py')
+		result2 = self.resolve('web.template/core.py')
 		
 		assert result1 is result2
 	

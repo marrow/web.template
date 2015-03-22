@@ -2,7 +2,7 @@
 
 from __future__ import unicode_literals, absolute_import
 
-from marrow.templating.core import Engine
+from web.template.core import Engine
 
 
 __all__ = ['SprintfEngine']
@@ -13,14 +13,14 @@ class SprintfEngine(Engine):
 	
 	Simple (string-based) usage:
 	
-		>>> from marrow.templating.core import Engines
+		>>> from web.template.core import Engines
 		>>> render = Engines()
 		>>> render('sprintf:', dict(hello="world"), string="Hello %(hello)s!")
 		('text/plain', 'Hello world!')
 	
 	File-based usage:
 	
-		>>> from marrow.templating.core import Engines
+		>>> from web.template.core import Engines
 		>>> render = Engines()
 		>>> render('sprintf:./tests/templates/hello.txt', dict(hello="world"))
 		('text/plain', 'Hello world!')

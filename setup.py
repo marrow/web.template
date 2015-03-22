@@ -1,17 +1,27 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
+from __future__ import print_function
+
 import os
 import sys
+import codecs
 
-from setuptools import setup, find_packages
+
+try:
+	from setuptools.core import setup, find_packages
+except ImportError:
+	from setuptools import setup, find_packages
+
 from setuptools.command.test import test as TestCommand
 
-if sys.version_info < (2, 6):
-	raise SystemExit("Python 2.6 or later is required.")
 
-exec(open(os.path.join("marrow", "templating", "release.py")).read())
+if sys.version_info < (2, 7):
+	raise SystemExit("Python 2.7 or later is required.")
+elif sys.version_info > (3, 0) and sys.version_info < (3, 3):
+	raise SystemExit("Python 3.3 or later is required.")
 
+exec(open(os.path.join("web", "template", "release.py")).read())
 
 
 class PyTest(TestCommand):
@@ -25,72 +35,102 @@ class PyTest(TestCommand):
 		import pytest
 		sys.exit(pytest.main(self.test_args))
 
+
+here = os.path.abspath(os.path.dirname(__file__))
+
+tests_require = [
+		'pytest',  # test collector and extensible runner
+		'pytest-cov',  # coverage reporting
+		'pytest-flakes',  # syntax validation
+		'pytest-cagoule',  # intelligent test execution
+		'pytest-spec<=0.2.22',  # output formatting
+		'genshi',
+		'mako',
+		'tenjin',
+	]
+
+
 setup(
-		name = "marrow.templating",
+		name = "WebCore.template",
 		version = version,
 		
-		description = "A common templating and serialization interface for Python applications.",
-		long_description = """\
-For full documentation, see the README.textile file present in the package,
-or view it online on the GitHub project page:
-
-https://github.com/marrow/marrow.templating""",
+		description = description,
+		long_description = codecs.open(os.path.join(here, 'README.rst'), 'r', 'utf8').read(),
+		url = url,
+		download_url = 'https://warehouse.python.org/project/WebCore.template/',
 		
-		author = "Alice Bevan-McGregor",
-		author_email = "alice+marrow@gothcandy.com",
-		url = "https://github.com/marrow/marrow.templating",
+		author = author.name,
+		author_email = author.email,
 		license = "MIT",
-		
-		test_suite = 'nose.collector',
-		tests_require = [
-				'pytest',
-				'pytest-cov',
-				'pytest-flakes',
-				'pytest-cagoule',
-				'pytest-spec<=0.2.22',
-			],
 		
 		classifiers = [
 				"Development Status :: 5 - Production/Stable",
 				"Environment :: Console",
+				"Environment :: Web Environment",
 				"Intended Audience :: Developers",
 				"License :: OSI Approved :: MIT License",
 				"Operating System :: OS Independent",
 				"Programming Language :: Python",
-				"Topic :: Software Development :: Libraries :: Python Modules"
+				"Programming Language :: Python :: 2",
+				"Programming Language :: Python :: 2.7",
+				"Programming Language :: Python :: 3",
+				"Programming Language :: Python :: 3.3",
+				"Programming Language :: Python :: 3.4",
+				"Programming Language :: Python :: Implementation :: CPython",
+				"Programming Language :: Python :: Implementation :: PyPy",
+				"Topic :: Internet :: WWW/HTTP :: WSGI",
+				"Topic :: Software Development :: Libraries :: Python Modules",
 			],
 		
-		packages = find_packages(exclude=['examples', 'tests']),
+		packages = find_packages(exclude=['documentation', 'example', 'test']),
 		include_package_data = True,
-		package_data = {'': ['README.textile', 'LICENSE']},
+		namespace_packages = [
+			'web',  # primary namespace
+			'web.ext',  # WebCore template extension
+			'web.template',  # engine namespace
+			'web.template.serialize',  # serialization engines
+			'web.template.template',  # template engines
+		],
+		
+		entry_points = {
+				'web.template': [
+						'json = web.template.serialize.json:render',
+						'bencode = web.template.serialize.bencode:render',
+						'yaml = web.template.serialize.yaml:render',
+						'pickle = web.template.serialize.pickle:render_pickle',
+						'cpickle = web.template.serialize.pickle:render_cpickle',
+						'marshal = web.template.serialize.marshal:render',
+						
+						'sprintf = web.template.template.sprintf:SprintfEngine',
+						'formatter = web.template.template.formatter:FormatterEngine',
+						'template = web.template.template.template:render',
+						
+						'genshi = web.template.template.genshi:Genshi',
+						'jinja2 = web.template.template.jinja2:Jinja2',
+						'mako = web.template.template.mako:Mako',
+						'cheetah = web.template.template.cheetah:Cheetah',
+						'kajiki = web.template.template.kajiki:Kajiki',
+						'tenjin = web.template.template.tenjin:Tenjin',
+						'pytenjin = web.template.template.tenjin:Tenjin',
+					]
+			},
+		
+		install_requires = [
+				'marrow.package<2.0',  # dynamic execution and plugin management
+				'marrow.util',  # deprecated
+				'WebOb',  # HTTP request and response objects, and HTTP status code exceptions
+			],
+		
+		extras_require = dict(
+				development = tests_require,
+			),
+		
+		tests_require = tests_require,
+		
+		dependency_links = [],
+		
 		zip_safe = True,
 		cmdclass = dict(
 				test = PyTest,
-			),
-		namespace_packages = [
-				'marrow', 'marrow.templating', 'marrow.templating.serialize', 'marrow.templating.template',
-			],
-		
-		entry_points = {
-				'marrow.templating': [
-						'json = marrow.templating.serialize.json:render',
-						'bencode = marrow.templating.serialize.bencode:render',
-						'yaml = marrow.templating.serialize.yaml:render',
-						'pickle = marrow.templating.serialize.pickle:render_pickle',
-						'cpickle = marrow.templating.serialize.pickle:render_cpickle',
-						'marshal = marrow.templating.serialize.marshal:render',
-						
-						'sprintf = marrow.templating.template.sprintf:SprintfEngine',
-						'formatter = marrow.templating.template.formatter:FormatterEngine',
-						'template = marrow.templating.template.template:render',
-						
-						'genshi = marrow.templating.template.genshi:Genshi',
-						'jinja2 = marrow.templating.template.jinja2:Jinja2',
-						'mako = marrow.templating.template.mako:Mako',
-						'cheetah = marrow.templating.template.cheetah:Cheetah',
-						'kajiki = marrow.templating.template.kajiki:Kajiki',
-						'tenjin = marrow.templating.template.tenjin:Tenjin',
-						'pytenjin = marrow.templating.template.tenjin:Tenjin',
-					]
-			}
+			)
 	)

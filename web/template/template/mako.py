@@ -2,8 +2,8 @@
 
 from __future__ import unicode_literals, absolute_import
 
-from marrow.templating.core import Engine
-from marrow.templating.resolver import Resolver
+from web.template.core import Engine
+from web.template.resolver import Resolver
 
 try:
 	from mako.template import Template

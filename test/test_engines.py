@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from unittest import TestCase
 
-from marrow.templating.core import Engines
+from web.template.core import Engines
 
 
 class TestEnginesDictCommonUsage(TestCase):
