@@ -51,7 +51,7 @@ tests_require = [
 
 
 setup(
-		name = "WebCore.template",
+		name = "web.template",
 		version = version,
 		
 		description = description,
