@@ -17,6 +17,14 @@ else:
 __all__ = ['render', 'CodecError', 'EncodeError', 'DecodeError', 'Encoding', 'ChunkedEncoder', 'Bencode', 'EnhancedBencode']
 
 
+def loads(data):
+	return EnhancedBencode().decode(data)
+
+
+def dumps(data):
+	return EnhancedBencode().encode(data)
+
+
 def render(data, template=None, kind='enhanced', i18n=None, **kw):
 	"""A bencoding serializer templating language.
 	
