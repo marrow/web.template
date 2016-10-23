@@ -19,8 +19,6 @@ The template extension provides a mechanism to perform the following tasks:
 
 * Render a template (defined by a path) using supplied data.
 
-* Serialize supplied data into an encapsulation, transport, or interchange format, such as JSON.
-
 * Allow application controllers to return a template path and data to use as the primary response to a request.
 
 These tasks are independent of each-other, allowing you to use the extension for whole-page generated responses or
@@ -29,20 +27,18 @@ even content generation for use by other subsystems, such as e-mail messages.
 
 ## Requirements
 
-### Python Packages
+The only requirement for use is a template engine of your choice. We recommend
+[`cinje`](https://github.com/marrow/cinje/) for maximize flexibility, functionality, and ease of use. A number of
+engines are supported, however, such as [`tenjin`](http://www.kuwata-lab.com/tenjin/) or
+[`mako`](http://www.makotemplates.org)
 
-* [marrow.templating](https://github.com/marrow/templating/)
 
-* an engine of your choice such as [`tenjin`](http://www.kuwata-lab.com/tenjin/) or
-  [`mako`](http://www.makotemplates.org)
-
-  
 ## Operation
 
-During startup this extension registers a view for tuples and plain dictionaries.
+During startup this extension registers a view to handle 2- and 3-tuples.
 
-When preparing the context on each request this extension adds two variables: a `namespace` dictionary and `render`
-function. The namespace can be extended to provide variables to every template being rendered (by default a variable
+When preparing the context on each request this extension adds two variables: a `namespace` attribute access dictionary
+and `render` function. The namespace can be extended to provide variables to every template being rendered (by default a variable
 called web, representing the context itself, will be made available to templates) and the render function may be
 overridden.
 
@@ -200,6 +196,7 @@ from marrow.util.bunch import Bunch
 
 # Local Imports
 from web.core.response import registry
+from web.core.context import Context
 from web.ext.template.handler import template_handler, annotated_template_handler
 from web.ext.template import render
 
@@ -207,13 +204,6 @@ from web.ext.template import render
 class TemplateExtension(object):
 	uses = ['locale']
 	provides = ['template']
-	
-	class Namespace(object):
-		def __contains__(self, name):
-			return hasattr(self, name)
-		
-		def __iter__(self):
-			return ((i, getattr(self, i)) for i in dir(self) if i[0] != '_')
 	
 	def __init__(self, default=None, path=None, override=None):
 		"""Executed to configure the extension."""
@@ -239,9 +229,11 @@ class TemplateExtension(object):
 	
 	def start(self, context):
 		"""Register the template response handler."""
+		
 		registry.register(template_handler, tuple)
 		registry.register(annotated_template_handler, dict)
-		context.namespace = self.Namespace
+		
+		context.namespace = Context()._promote('Namespace')
 		
 	def prepare(self, context):
 		context.namespace = context.namespace()
