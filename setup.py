@@ -108,7 +108,6 @@ setup(
 						'genshi = web.template.template.genshi:Genshi',
 						'jinja2 = web.template.template.jinja2:Jinja2',
 						'mako = web.template.template.mako:Mako',
-						'cheetah = web.template.template.cheetah:Cheetah',
 						'kajiki = web.template.template.kajiki:Kajiki',
 						'tenjin = web.template.template.tenjin:Tenjin',
 						'pytenjin = web.template.template.tenjin:Tenjin',
@@ -116,9 +115,7 @@ setup(
 			},
 		
 		install_requires = [
-				'marrow.package<2.0',  # dynamic execution and plugin management
-				'marrow.util',  # deprecated
-				'WebOb',  # HTTP request and response objects, and HTTP status code exceptions
+				'marrow.package>=2.0,<3.0',  # dynamic execution and plugin management
 			],
 		
 		extras_require = dict(
