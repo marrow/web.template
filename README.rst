@@ -1,16 +1,20 @@
-h1(#title). Marrow Templating
+=================
+Marrow Templating
+=================
 
-bq(subtitle). A universal templating engine and serialization API.
+    © 2009-2018 Alice Bevan-McGregor and contributors.
 
-bq(byline). (C) 2009-2011, Alice Bevan-McGregor and contributors.
+..
 
-bq(byline). "https://github.com/marrow/marrow.templating":github-project
+    https://github.com/marrow/web.template
 
-[github-project]https://github.com/marrow/marrow.templating
+..
+
+    |latestversion| |masterstatus| |mastercover| |issuecount|
 
 
-
-h2(#what-is). %1.% What is Marrow Templating?
+1. What is Marrow Templating?
+=============================
 
 Marrow Templating is an attempt to produce a consistent, universal API for utilizing a variety of template rendering engines and data serialization formats.  Many web frameworks contain their own templating "helpers" which re-implement the same templating glue code over and over again and are often difficult or impossible to extend by non-core developers.
 
@@ -18,18 +22,21 @@ Marrow Templating (formerly alacarte, formerly cti) has been designed to offer t
 
 There are a wide variety of templating languages available.  In fact, Python seems to collect them.  In general, there is no unified or consistent way to utilize these templating languages.  Due to the learning curve, developers become hesitant to switch from one language to another.  Many templating languages are also poorly documented.
 
-An attempt was made by the TurboGears project to create a unified API called "Buffet":http://projects.dowski.com/projects/buffet, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Buffet was strongly geared towards one templating engine, Genshi, was tweaked to offer enhanced embedding of alien templating languages within each-other, and was overly complex.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new templating engines.
+An attempt was made by the TurboGears project to create a unified API called `Buffet <https://web.archive.org/web/20080712004859/http://projects.dowski.com/projects/buffet>`_, used primarily by the CherryPy application server, though in some cases this API is more difficult to use than the raw template language.  Buffet was strongly geared towards one templating engine, Genshi, was tweaked to offer enhanced embedding of alien templating languages within each-other, and was overly complex.  Other frameworks (like Pylons) utilize small helper functions, but require that the framework be updated to extend support to new templating engines.
 
 The onus for ease of deployment should be on the templating engine creator, not the framework creator or front-end web developer.
 
 
-h2(#installation). %2.% Installation
+2. Installation
+===============
 
-Installing @marrow.templating@ is easy, just execute the following in a terminal: [2]
+Installing ``web.template`` is easy, just execute the following in a terminal::
 
-<pre><code>pip install marrow.templating</code></pre>
+<pre><code>pip install web.template</code></pre>
 
-If you add @marrow.templating@ to the @install_requires@ argument of the call to @setup()@ in your application's @setup.py@ file, @marrow.templating@ will be automatically installed and made available when your own application is installed.  We recommend using "less than" version numbers to ensure there are no unintentional side-effects when updating.  Use @"marrow.templating<1.1"@ to get all bugfixes for the current release, and @"marrow.templating<2.0"@ to get bugfixes and feature updates, but ensure that large breaking changes are ignored.
+**Note:** We *strongly* recommend always using a container, virtualization, or sandboxing environment of some kind when developing using Python; installing things system-wide is yucky (for a variety of reasons) nine times out of ten.  We prefer light-weight `virtualenv <https://virtualenv.pypa.io/en/latest/virtualenv.html>`_, others prefer solutions as robust as `Vagrant <http://www.vagrantup.com>`_.
+
+If you add ``web.template`` to the ``install_requires`` argument of the call to ``setup()`` in your applicaiton's ``setup.py`` file, this project will be automatically installed and made available when your own application or library is installed.  We recommend using "less than" version numbers to ensure there are no unintentional side-effects when updating.  Use ``web.template<2.1`` to get all bugfixes for the current release, and ``web.template<3.0`` to get bugfixes and feature updates while ensuring that large breaking changes are not installed.
 
 
 h3(#install-dev). %2.1.% Development Version
@@ -174,5 +181,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 fn1. In order to run the full test suite you need to install "pymta":http://www.schwarz.eu/opensource/projects/pymta/ and its dependencies.
-
-fn2. If "Pip":http://www.pip-installer.org/ is not available for you, you can use @easy_install@ instead. We have much love for Pip and "Distribute":http://packages.python.org/distribute/, though.
