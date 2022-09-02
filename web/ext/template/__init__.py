@@ -195,7 +195,7 @@ from marrow.util.compat import basestring
 from marrow.util.bunch import Bunch
 
 # Local Imports
-from web.core.response import registry
+#from web.core.response import registry
 from web.core.context import Context
 from web.ext.template.handler import template_handler, annotated_template_handler
 from web.ext.template import render
@@ -230,8 +230,8 @@ class TemplateExtension(object):
 	def start(self, context):
 		"""Register the template response handler."""
 		
-		registry.register(template_handler, tuple)
-		registry.register(annotated_template_handler, dict)
+		context.view.register(template_handler, tuple)
+		context.view.register(annotated_template_handler, dict)
 		
 		context.namespace = Context()._promote('Namespace')
 		
