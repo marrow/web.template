@@ -233,6 +233,7 @@ class TemplateExtension(object):
 		context.view.register(template_handler, tuple)
 		context.view.register(annotated_template_handler, dict)
 		
+		context.render = render.render  # Expose the configured render function to the application.
 		context.namespace = Context()._promote('Namespace')
 		
 	def prepare(self, context):
