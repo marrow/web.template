@@ -115,7 +115,7 @@ setup(
 			},
 		
 		install_requires = [
-				'marrow.package>=2.0,<3.0',  # dynamic execution and plugin management
+				'marrow.package<3.0',  # dynamic execution and plugin management
 			],
 		
 		extras_require = dict(
