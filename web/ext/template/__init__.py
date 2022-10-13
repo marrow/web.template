@@ -233,7 +233,7 @@ class TemplateExtension(object):
 		registry.register(template_handler, tuple)
 		registry.register(annotated_template_handler, dict)
 		
-		context.namespace = Context()._promote('Namespace')
+		context.namespace = Context()._promote('Namespace', instantiate=False)
 		
 	def prepare(self, context):
 		context.namespace = context.namespace()
