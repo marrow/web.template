@@ -230,8 +230,8 @@ class TemplateExtension(object):
 	def start(self, context):
 		"""Register the template response handler."""
 		
-		context.view.register(template_handler, tuple)
-		context.view.register(annotated_template_handler, dict)
+		context.view.register(tuple, template_handler)
+		context.view.register(dict, annotated_template_handler)
 		
 		context.render = render.render  # Expose the configured render function to the application.
 		context.namespace = Context()._promote('Namespace')
