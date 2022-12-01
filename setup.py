@@ -7,12 +7,7 @@ import os
 import sys
 import codecs
 
-
-try:
-	from setuptools.core import setup, find_packages
-except ImportError:
-	from setuptools import setup, find_packages
-
+from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
 
@@ -82,15 +77,8 @@ setup(
 				"Topic :: Software Development :: Libraries :: Python Modules",
 			],
 		
-		packages = find_packages(exclude=['documentation', 'example', 'test']),
+		packages = ('web.ext', 'web.template', 'web.template.serialize', 'web.template.template'),
 		include_package_data = True,
-		namespace_packages = [
-			'web',  # primary namespace
-			'web.ext',  # WebCore template extension
-			'web.template',  # engine namespace
-			'web.template.serialize',  # serialization engines
-			'web.template.template',  # template engines
-		],
 		
 		entry_points = {
 				'web.template': [
