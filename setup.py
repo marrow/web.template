@@ -77,7 +77,7 @@ setup(
 				"Topic :: Software Development :: Libraries :: Python Modules",
 			],
 		
-		packages = ('web.ext', 'web.template', 'web.template.serialize', 'web.template.template'),
+		packages = ('web.ext', 'web.ext.template', 'web.template', 'web.template.serialize', 'web.template.template'),
 		include_package_data = True,
 		
 		entry_points = {
